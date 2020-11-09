@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import './App.css';
+import ExpensesContainer from './containers/ExpensesContainer'
+import './index.css';
 
 
 
@@ -14,7 +15,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-      
+            <ExpensesContainer />
         </div>
       </Router>
     ); 
