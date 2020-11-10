@@ -1,5 +1,4 @@
-
-export default (state = {expenses: [], loading: false }, action) => {
+ const expensesReducer = (state = {expenses: [], loading: false }, action) => {
 	switch (action.type) {
 		case "LOADING_EXPENSES":
 			return {
@@ -15,4 +14,6 @@ export default (state = {expenses: [], loading: false }, action) => {
 		default:
 			return state
 	}
-}
+ }
+
+ export default expensesReducer
