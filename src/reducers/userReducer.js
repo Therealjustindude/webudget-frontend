@@ -1,4 +1,4 @@
- const userReducer = (state = {user: {}, loading: false }, action) => {
+const userReducer = (state = { user: {}, loading: false }, action ) => {
 	switch (action.type) {
 		case "LOADING_USER":
 			return {

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router
 } from 'react-router-dom';
-import ExpensesContainer from './containers/ExpensesContainer'
+// import ExpensesContainer from './containers/ExpensesContainer'
+import UserContainer from './containers/UserContainer';
 import './index.css';
 
 
@@ -14,7 +15,8 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-            <ExpensesContainer />
+          <UserContainer />
+          {/* <ExpensesContainer /> */}
         </div>
       </Router>
     ); 
