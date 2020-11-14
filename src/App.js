@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  BrowserRouter as Router
+  BrowserRouter as Router, Switch, Route
 } from 'react-router-dom';
 // import ExpensesContainer from './containers/ExpensesContainer'
 import UserContainer from './containers/UserContainer';
@@ -15,8 +15,12 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <UserContainer />
-          {/* <ExpensesContainer /> */}
+          <Switch>
+            <Route exact path="/">
+                <UserContainer />
+            </Route>
+
+          </Switch>
         </div>
       </Router>
     ); 
