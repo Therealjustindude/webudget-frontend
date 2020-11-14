@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { loginUser } from '../actions/user'
+import { signupUser } from '../actions/user'
+import {
+	Link
+  } from 'react-router-dom';
 
 
 class SignupForm extends React.Component {
@@ -12,8 +15,12 @@ class SignupForm extends React.Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
-
-		debugger
+		this.props.signupUser(this.state)
+		this.setState({
+			user_name: '',
+			email: '',
+			password: ''
+		})
 	}
 	handleInput = (e) => {
 		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
@@ -22,26 +29,22 @@ class SignupForm extends React.Component {
 		return (
 			<SignupFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
-				<StyledTitle>Sign Up</StyledTitle>
-					<label style={lableStyle}htmlFor="user_name">User Name:</label>
+				<StyledH1>-Sign Up-</StyledH1>
+					<StyledP>User Name:</StyledP>
 					<StyledInput type="text" onChange={this.handleInput}name="user_name" value={this.state.user_name}/>
-					<label style={lableStyle} htmlFor="email">Email:</label>
+					<StyledP>Email:</StyledP>
 					<StyledInput type="email" onChange={this.handleInput} name="email" value={this.state.email}/>
-					<label style={lableStyle} htmlFor="password">Password:</label>
+					<StyledP>Password:</StyledP>
 					<StyledInput type="password" onChange={this.handleInput} name="password" value={this.state.password} />
 					<StyledButton type="submit">Create Account</StyledButton>
+					<br/>
+					<Link to='/'>Have an account? Click to log in</Link>
 				</StyledForm>
 			</SignupFormWrapper>
 	)}
 }
-export default connect()(SignupForm)
+export default connect(null, { signupUser })(SignupForm)
 
-const lableStyle = {
-	display: 'flex',
-	margin: 5,
-	textAlign: 'center',
-	alignItems: 'center',
-}
 
 const SignupFormWrapper = styled.div`
 	display: flex;
@@ -61,20 +64,31 @@ const StyledForm = styled.form`
 	border-radius: 10px;
 	boxing-size: border-box;
 	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+	text-align: center;
+
 `
 
-const StyledTitle = styled.h1`
+const StyledH1 = styled.h1`
   font-size: 1.5em;
   text-align: center;
+  margin: 10px;
+`;
+const StyledP = styled.p`
+  font-size: 1.5em;
+  text-align: center;
+  font-size: medium;
 `;
 
 const StyledInput = styled.input`
-	display: flex;
 	margin: 5px;
+	display: block;
+ 	margin-right: auto;
+  	margin-left: auto;
 `
 
 const StyledButton = styled.button`
-	margin: 5px;
+	margin: 8px;
+	padding: 5px;
 `
 
 // const StyledError = styled.div`
