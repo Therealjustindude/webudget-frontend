@@ -1,4 +1,4 @@
-const userReducer = (state = { user: {expenses:[]}, loading: false }, action ) => {
+const userReducer = (state = { userProfile: { user: {}},loading: false }, action ) => {
 	switch (action.type) {
 		case "LOADING_USER":
 			return {
@@ -8,13 +8,21 @@ const userReducer = (state = { user: {expenses:[]}, loading: false }, action ) =
 		case "USER_LOADED":
 			return {
 				...state,
-				user: action.payload,
+				userProfile: {
+					user: action.payload,
+					...state.userProfile.user,
+					expenses: action.payload.expenses ? action.payload.expenses : []
+				},
 				loading: false
 			}
 		case "CREATE_USER":
 			return {
 				...state,
-				user: action.payload,
+				userProfile: {
+					user: action.payload,
+					...state.userProfile.user,
+					expenses: action.payload.expenses ? action.payload.expenses : []
+				},
 				loading: false
 			}
 		default:
