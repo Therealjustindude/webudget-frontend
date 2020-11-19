@@ -13,7 +13,7 @@ class LoginForm extends React.Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
-		this.props.loginUser(this.state)
+		this.props.loginUser(this.state, this.props.history)
 		this.setState({
 			email: '',
 			password: ''
@@ -22,7 +22,7 @@ class LoginForm extends React.Component {
 	handleInput = (e) => {
 		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
 	}
-	render(){
+	render() {
 		return (
 			<LoginFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
@@ -31,7 +31,7 @@ class LoginForm extends React.Component {
 					<StyledInput type="email" onChange={this.handleInput} name="email" value={this.state.email}/>
 					<StyledP>Password:</StyledP>
 					<StyledInput type="password" onChange={this.handleInput} name="password" value={this.state.password} />
-					<StyledButton type="submit">Log In</StyledButton>
+					<StyledButton type="submit">Submit</StyledButton>
 					<br/>
 					<Link to='/signup'>No account? Click to create an account</Link>
 				</StyledForm>
@@ -83,8 +83,8 @@ const StyledInput = styled.input`
 
 const StyledButton = styled.button`
 	margin: 8px;
-	padding: 5px;
-	width: 100%;
+	padding: 3px;
+	width: 80px;
 `
 
 // const StyledError = styled.div`

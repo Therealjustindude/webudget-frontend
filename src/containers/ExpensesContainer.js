@@ -3,15 +3,11 @@ import { connect } from 'react-redux'
 import { getExpenses } from '../actions/expenses'
 
 class ExpensesContainer extends Component {
-	// componentDidMount() {
-	// 	console.log("I mounted")
-	// 	this.props.getExpenses()
-	// }
-
+	
 	render() {
 		return (
 			<div>
-				
+				hi
 			</div>
 		)
 	}
