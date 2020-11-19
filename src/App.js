@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import {
-  BrowserRouter as Router, Switch, Route
+  Switch, Route
 } from 'react-router-dom';
-// import ExpensesContainer from './containers/ExpensesContainer'
+import LoginForm from './components/LoginForm'
+import SignupForm from './components/SignupForm'
 import UserContainer from './containers/UserContainer';
 import './index.css';
 
@@ -13,16 +14,14 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
         <div className="App">
           <Switch>
-            <Route exact path="/">
-                <UserContainer />
-            </Route>
-
+            <Route exact path="/" render={(routerProps) => <LoginForm history={routerProps.history}/>} />
+					  <Route path='/signup' render={(routerProps) => <SignupForm history={routerProps.history}/>}/>
+            <Route path='/users/:id' render={(routerProps) => <UserContainer history={routerProps.history} />} />
+            
           </Switch>
         </div>
-      </Router>
     ); 
   }
 }
