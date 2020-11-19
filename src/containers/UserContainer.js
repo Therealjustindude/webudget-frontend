@@ -1,24 +1,20 @@
 import React, { Component } from 'react'
-import LoginForm from '../components/LoginForm'
-import SignupForm from '../components/SignupForm'
-import {
-	BrowserRouter as Router,
-	Route,
-	Switch
-  } from 'react-router-dom';
+import ExpensesContainer from './ExpensesContainer'
+import {connect} from 'react-redux'
 class UserContainer extends Component {
 	
 	render() {
 		return (
-			<div className="UserContainer">
-				<Router>
-					<Switch>
-						<Route exact path="/" component={LoginForm} />
-						<Route path='/signup' component={SignupForm} />
-					</Switch>
-				</Router>
-			</div>
+			<ExpensesContainer />
 		)
 	}
 }
-export default UserContainer
+
+const mSTP = (state) => {
+	return {
+		user: state.userReducer.userProfile.user,
+		expenses: state.userReducer.userProfile.expenses,
+		loading: state.userReducer.userProfile.loading
+	}
+}
+export default connect(mSTP)(UserContainer)
