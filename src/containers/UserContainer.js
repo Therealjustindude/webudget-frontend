@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
-import ExpensesContainer from './ExpensesContainer'
-import {connect} from 'react-redux'
+import ExpensesTable from '../components/ExpensesTable'
+
 class UserContainer extends Component {
+	
 	
 	render() {
 		return (
-			<ExpensesContainer />
+			<ExpensesTable />
 		)
 	}
 }
 
-const mSTP = (state) => {
-	return {
-		user: state.userReducer.userProfile.user,
-		expenses: state.userReducer.userProfile.expenses,
-		loading: state.userReducer.userProfile.loading
-	}
-}
-export default connect(mSTP)(UserContainer)
+
+export default UserContainer

@@ -66,7 +66,6 @@ const StyledH1 = styled.h1`
   font-size: 1.5em;
   text-align: center;
   margin: 10px;
-  
 `;
 const StyledP = styled.p`
   font-size: 1.5em;

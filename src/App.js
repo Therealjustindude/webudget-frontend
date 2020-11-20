@@ -13,17 +13,18 @@ class App extends Component {
   
 
   render() {
+
     return (
         <div className="App">
           <Switch>
             <Route exact path="/" render={(routerProps) => <LoginForm history={routerProps.history}/>} />
-					  <Route path='/signup' render={(routerProps) => <SignupForm history={routerProps.history}/>}/>
+            <Route path='/signup' render={(routerProps) => <SignupForm history={routerProps.history} />} />
             <Route path='/users/:id' render={(routerProps) => <UserContainer history={routerProps.history} />} />
-            
           </Switch>
         </div>
     ); 
   }
 }
+
 
 export default App;
