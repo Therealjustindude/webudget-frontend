@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import{loadState, saveState} from '../actions/localStorage'
 import {connect} from 'react-redux'
-import styled from 'styled-components'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,21 +15,32 @@ const useStyles = {
     minWidth: 650,
   },
 };
-const StyledDiv = styled.div`
-  font-size: 2.5em;
-  font-weight: bold;
-  text-align: center;
-  margin: 5px;
-`;
+
 
 class ExpensesTable extends Component {
-	
-	
+	state = {
+		user: {},
+		expenses: []
+	}
+	// use component will unmount to update the db and save data to local storage
+	componentWillMount() {
+		if (localStorage.getItem("currentUser") === null) {
+			saveState(this.props.user)
+		}
+	}
+	componentDidMount() {
+		const persistedState = { user: loadState() }
+		this.setState({
+			user: persistedState.user,
+			expenses: persistedState.user.expenses ? persistedState.user.expenses : []
+		})		
+	}
+	// component did mount to retrieve data from local storage
+	// add expenses button
 	render() {
-		const rows = this.props.user.expenses;
+		const rows = this.state.expenses;
 		return (
 			<>
-				<Paper><StyledDiv>weBudget</StyledDiv></Paper>
 				<TableContainer component={Paper}>
 					  <Table className={useStyles.table}>
 						<TableHead>
@@ -51,7 +62,7 @@ class ExpensesTable extends Component {
 									  <TableCell align="right">{row.description}</TableCell>
 									  <TableCell align="right">{row.amount}</TableCell>
 									  <TableCell align="right">{row.bank_account}</TableCell>
-									  <TableCell align="right"><Checkbox /></TableCell>
+									  <TableCell align="right">{row.is_automatic ? "Yes" : "No"}</TableCell>
 									<TableCell align="right"><Checkbox /></TableCell>
 									{/* style check boxes and add a function to change data in db */}
 									{/* can i hide the id and user_id in the table cell */}
@@ -67,8 +78,8 @@ class ExpensesTable extends Component {
 
 const mSTP = (state) => {
 	return {
-		user: state.userReducer.userProfile.user,
-		expenses: state.userReducer.userProfile.expenses
+		user: state.userReducer.userProfile.user ,
+		expenses: state.userReducer.userProfile.expenses 
 	}
 }
 

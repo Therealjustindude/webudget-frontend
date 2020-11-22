@@ -2,9 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { loginUser } from '../actions/user'
-import {
-	Link
-  } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class LoginForm extends React.Component {
 	state = {

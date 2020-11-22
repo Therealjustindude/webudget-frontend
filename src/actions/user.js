@@ -1,3 +1,4 @@
+import {saveToken } from './localStorage'
 export const loginUser = (data, browserHistory) => {
 	return ((dispatch) => {
 		dispatch({ type: "LOADING_USER" })
@@ -14,7 +15,7 @@ export const loginUser = (data, browserHistory) => {
 				if (res.errors) {
 					browserHistory.push('/')
 				} else {
-					localStorage.setItem('authToken', res.auth_token)
+					saveToken(res.auth_token)
 					dispatch({ type: "USER_LOADED", payload: res.user })
 					browserHistory.push(`/users/${res.user.id}`)
 				}
@@ -41,7 +42,7 @@ export const signupUser = (data, browserHistory) => {
 				if (res.errors) {
 					browserHistory.push('/')
 				} else {
-					localStorage.setItem('authToken', res.auth_token)
+					saveToken(res.auth_token)
 					dispatch({ type: "CREATE_USER", payload: res.user })
 					browserHistory.push(`/users/${res.user.id}`)
 				}				
