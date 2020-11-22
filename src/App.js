@@ -1,30 +1,33 @@
 import React, { Component } from 'react'
-import {
-  Switch, Route
-} from 'react-router-dom';
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-import UserContainer from './containers/UserContainer';
+import { Suspense, lazy } from 'react';
+import {connect} from 'react-redux'
+import {Switch, Route} from 'react-router-dom';
 import './index.css';
 
-
+const LoginForm = lazy(() => import('./components/LoginForm'));
+const SignupForm = lazy(() => import('./components/SignupForm'));
+const UserContainer = lazy(() => import('./containers/UserContainer'));
 
 class App extends Component {
   
-
+  // add componenet did mount to check for user and authtoken
   render() {
 
     return (
-        <div className="App">
+      <div className="App">
+        <Suspense fallback={<h1>Loading...</h1>}>
           <Switch>
             <Route exact path="/" render={(routerProps) => <LoginForm history={routerProps.history}/>} />
             <Route path='/signup' render={(routerProps) => <SignupForm history={routerProps.history} />} />
             <Route path='/users/:id' render={(routerProps) => <UserContainer history={routerProps.history} />} />
           </Switch>
-        </div>
+        </Suspense>
+      </div>
     ); 
   }
 }
 
+ 
 
-export default App;
+// connect to store
+export default connect()(App);
