@@ -12,8 +12,9 @@ export const loginUser = (data, browserHistory) => {
 		})
 			.then(res => res.json())
 			.then(res => { 
-				if (res.errors) {
+				if (res.error) {
 					browserHistory.push('/')
+					alert("Something went wrong!")
 				} else {
 					saveToken(res.auth_token)
 					dispatch({ type: "USER_LOADED", payload: res.user })
@@ -39,8 +40,9 @@ export const signupUser = (data, browserHistory) => {
 		})
 			.then(res => res.json())
 			.then(res => { 
-				if (res.errors) {
+				if (res.error) {
 					browserHistory.push('/')
+					alert("Something went wrong!")
 				} else {
 					saveToken(res.auth_token)
 					dispatch({ type: "CREATE_USER", payload: res.user })
