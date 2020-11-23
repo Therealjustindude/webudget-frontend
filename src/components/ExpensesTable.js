@@ -23,19 +23,24 @@ class ExpensesTable extends Component {
 		expenses: []
 	}
 	// use component will unmount to update the db and save data to local storage
-	componentWillMount() {
+	componentDidMount() {
 		if (localStorage.getItem("currentUser") === null) {
 			saveState(this.props.user)
+		} else {
+			const currentUser = JSON.parse(localStorage.currentUser)
+			debugger
+			if (this.props.newExpense){
+				currentUser.expenses.push(this.props.newExpense)
+			}
+			localStorage.removeItem('currentUser')
+			saveState(currentUser)
 		}
-	}
-	componentDidMount() {
 		const persistedState = { user: loadState() }
 		this.setState({
 			user: persistedState.user,
 			expenses: persistedState.user.expenses ? persistedState.user.expenses : []
 		})		
 	}
-	// component did mount to retrieve data from local storage
 	// add expenses button
 	render() {
 		const rows = this.state.expenses;
@@ -79,7 +84,8 @@ class ExpensesTable extends Component {
 const mSTP = (state) => {
 	return {
 		user: state.userReducer.userProfile.user ,
-		expenses: state.userReducer.userProfile.expenses 
+		expenses: state.userReducer.userProfile.expenses,
+		newExpense: state.expensesReducer.userProfile.expenses
 	}
 }
 
