@@ -1,4 +1,4 @@
- const expensesReducer = (state = { userProfile: { user: {}},loading: false }, action) => {
+ const expensesReducer = (state = {loading: false }, action) => {
 	switch (action.type) {
 		case "LOADING_EXPENSES":
 			return {
@@ -8,10 +8,7 @@
 		case "EXPENSE_ADDED":
 			return {
 				...state,
-				userProfile: {
-					...state.userProfile.user,
-					expenses: action.payload
-				}
+				expense: action.payload
 			}
 		default:
 			return state

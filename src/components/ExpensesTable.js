@@ -28,7 +28,6 @@ class ExpensesTable extends Component {
 			saveState(this.props.user)
 		} else {
 			const currentUser = JSON.parse(localStorage.currentUser)
-			debugger
 			if (this.props.newExpense){
 				currentUser.expenses.push(this.props.newExpense)
 			}
@@ -85,7 +84,7 @@ const mSTP = (state) => {
 	return {
 		user: state.userReducer.userProfile.user ,
 		expenses: state.userReducer.userProfile.expenses,
-		newExpense: state.expensesReducer.userProfile.expenses
+		newExpense: state.expensesReducer.expense
 	}
 }
 
