@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import {addExpense} from '../actions/userExpenses'
+import { addExpense } from '../actions/userExpenses'
+import {Link} from 'react-router-dom';
+
 
 
 class AddExpenseForm extends React.Component {
@@ -16,6 +18,7 @@ class AddExpenseForm extends React.Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
+		debugger
 		this.props.addExpense(this.state, this.props.history)
 		this.setState({
 			date_due: '',
@@ -28,7 +31,10 @@ class AddExpenseForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
 	}
 	render() {
+		// const currentUserId = JSON.parse(localStorage.currentUser).id
+		// href={`/users/${currentUserId}`}
 		return (
+		<>
 			<AddExpenseFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
 				<StyledH1>-Add Expense-</StyledH1>
@@ -40,9 +46,13 @@ class AddExpenseForm extends React.Component {
 					<StyledInput type="text" onChange={this.handleInput} name="amount" value={this.state.password} />
 					<StyledP>Account:</StyledP>
 					<StyledInput type="text" onChange={this.handleInput} name="bank_account" value={this.state.password} />
-					<StyledButton type="submit">Submit</StyledButton>
-				</StyledForm>
+					<StyledButton type="submit" >Submit</StyledButton>
+					<br/>
+					<Link onClick={() => this.props.history.goBack()}>Cancel</Link>
+					</StyledForm>
 			</AddExpenseFormWrapper>
+			
+		</>
 	)}
 }
 export default connect(null, {addExpense})(AddExpenseForm)
@@ -52,10 +62,10 @@ const AddExpenseFormWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items:center;
-	height: 100vh;
+	height: auto;
+	width: auto;
 	padding: 0 20px;
 	boxing-size: border-box;
-	background-color: black;
 `
 
 const StyledForm = styled.form`
@@ -64,9 +74,14 @@ const StyledForm = styled.form`
 	padding: 40px;
 	background-color: white;
 	border-radius: 10px;
-	boxing-size: border-box;
 	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
 	text-align: center;
+	position: fixed;
+    width: 80%;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
 `
 
 const StyledH1 = styled.h1`

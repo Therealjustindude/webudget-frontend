@@ -20,7 +20,7 @@ class UserContainer extends Component {
   						Log Out
 					</Button>
 				</Paper>
-				<ExpensesTable />
+				<ExpensesTable history={this.props.history }/>
 			</>
 		)
 	}

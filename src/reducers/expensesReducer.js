@@ -10,6 +10,11 @@
 				...state,
 				expense: action.payload
 			}
+		case "EXPENSE_PATCHED":
+			return {
+				...state,
+				expense: action.payload
+			}
 		default:
 			return state
 	}
