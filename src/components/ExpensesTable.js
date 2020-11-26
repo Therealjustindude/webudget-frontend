@@ -4,29 +4,26 @@ import {connect} from 'react-redux'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components'
 import {Link} from 'react-router-dom';
 import { deleteExpense } from '../actions/userExpenses'
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
-
-
-
-const useStyles = {
-  table: {
-    minWidth: 650,
-  },
-};
 
 
 class ExpensesTable extends Component {
 	state = {
 		user: this.props.user ? this.props.user : {},
-		expenses: this.props.expenses ? this.props.expenses : []
+		expenses: this.props.expenses ? this.props.expenses : [],
+		total: 0
 	}
 	// use component will unmount to update the db and save data to local storage
 	componentDidMount() {
@@ -49,10 +46,18 @@ class ExpensesTable extends Component {
 		const persistedState = { user: loadState() }
 		this.setState({
 			user: persistedState.user,
-			expenses: persistedState.user.expenses ? persistedState.user.expenses : []
-		})		
+			expenses: persistedState.user.expenses ? persistedState.user.expenses : [],
+			total: this.getTotal(persistedState.user.expenses)
+		})	
 	}
 
+	getTotal = (expenses) => {
+		let total = 0
+		expenses.forEach(exp => {
+			total += exp.amount 
+		})
+		return total
+	}
 
 	handleDelete = (exp) => {
 		this.props.deleteExpense(exp)
@@ -72,61 +77,83 @@ class ExpensesTable extends Component {
 	render() {
 		return (
 			<>
-				<TableContainer component={Paper} >
-					  <Table className={useStyles.table}>
-						<TableHead>
-							  <TableRow >
-								<TableCell align="center">Paid</TableCell>
-								<TableCell align="center">Due Date</TableCell>
-								<TableCell align="center">Description</TableCell>
-								<TableCell align="center">Amount</TableCell>
-								<TableCell align="center">Withdrawn Account</TableCell>
-								<TableCell align="center">Automatic Payment</TableCell>
-								<TableCell align="center">Money Deposited</TableCell>
-								<TableCell align="center"> </TableCell>
-								<TableCell align="center"> </TableCell>
-							  </TableRow>
-						</TableHead>
-						<TableBody>
-							{this.state.expenses.map((exp) => (
-								<TableRow key={exp.id} user_id={exp.user_id}>
-									  <TableCell align="center" padding="checkbox" ><Checkbox checked={exp.is_paid ? true : false} /></TableCell>
-									  <TableCell align="center">{exp.date_due}</TableCell>
-									  <TableCell align="center">{exp.description}</TableCell>
-									  <TableCell align="center">{exp.amount}</TableCell>
-									  <TableCell align="center">{exp.bank_account}</TableCell>
-									  <TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
-									<TableCell align="center" padding="checkbox"><Checkbox checked={exp.is_money_in_account ? true : false}/></TableCell>
-									<TableCell align="center">
-										<Link to={{
-											pathname: `/users/${exp.user_id}/expenses/${exp.id}/edit`,
-											aboutProp: {
-												exp_id: `${exp.id}`
-											}
-										}}>
-											<StyledButton>Edit</StyledButton>
-										</Link>
-									</TableCell>
-									<TableCell align="center">
-											<StyledButton onClick={()=> this.handleDelete(exp)}>Delete</StyledButton>
-									</TableCell>
-								</TableRow>
-							))}
-							<TableRow>
-								<TableCell variant="footer" size="small" align="center">
+				<Paper style={{ overflow:'hidden',margin: '5px' }}>
+					<Table >
+					<TableHead>
+							<TableRow >
+							<TableCell align="center">Paid</TableCell>
+							<TableCell align="center">Due Date</TableCell>
+							<TableCell align="center">Description</TableCell>
+							<TableCell align="center"><AttachMoneyIcon /></TableCell>
+							<TableCell align="center">Account</TableCell>
+							<TableCell align="center">Automatic</TableCell>
+							<TableCell align="center">Deposited</TableCell>
+							<TableCell align="center">  </TableCell>
+							<TableCell align="center">
+								<StyledButton>
 									<Link to={`/users/${this.state.user.id}/expenses/add`}>
-										<StyledButton>Add Expense</StyledButton>
+									Add Expense
+									</Link>
+								</StyledButton>
+							</TableCell>
+							</TableRow>
+					</TableHead>
+					<TableBody>
+						{this.state.expenses.map((exp) => (
+							<TableRow key={exp.id} user_id={exp.user_id}>
+									<TableCell align="right" padding="checkbox" >
+										<FormControlLabel
+										control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="is_paid" />}
+										checked={exp.is_paid ? true : false}
+										/>	
+									</TableCell>
+								<TableCell align="center">
+									{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}
+								</TableCell>
+									<TableCell align="center">{exp.description}</TableCell>
+								<TableCell align="center">
+									${new Intl.NumberFormat().format(exp.amount)}
+								</TableCell>
+									<TableCell align="center">{exp.bank_account}</TableCell>
+									<TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
+								<TableCell align="right" padding="checkbox">
+									<FormControlLabel
+										control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="is_money_in_account" />}
+										checked={exp.is_money_in_account ? true : false} 
+									/>
+								</TableCell>
+								<TableCell align="center">
+									<Link to={{
+										pathname: `/users/${exp.user_id}/expenses/${exp.id}/edit`,
+										aboutProp: {
+											exp_id: `${exp.id}`
+										}
+									}}>
+										<StyledButton>Edit</StyledButton>
 									</Link>
 								</TableCell>
+								<TableCell align="center">
+										<StyledButton onClick={()=> this.handleDelete(exp)}>Delete</StyledButton>
+								</TableCell>
 							</TableRow>
-						</TableBody>
-					  </Table>
-				</TableContainer>
+						))}
+					</TableBody>
+					<TableFooter>
+						<TableRow>
+							<TableCell/>
+							<TableCell/>
+							<TableCell /> 
+							<TableCell variant="footer" align="center">
+									Total: ${new Intl.NumberFormat().format(this.state.total)}
+							</TableCell>
+						</TableRow>
+					</TableFooter>
+					</Table>
+				</Paper>
 			</>
 		  );
 	}
 }
-
 
 const StyledButton = styled.button`
 	padding: 2px;
