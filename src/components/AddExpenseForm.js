@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { addExpense } from '../actions/userExpenses'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+
 
 
 
@@ -18,7 +20,6 @@ class AddExpenseForm extends React.Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
-		debugger
 		this.props.addExpense(this.state, this.props.history)
 		this.setState({
 			date_due: '',
@@ -31,23 +32,23 @@ class AddExpenseForm extends React.Component {
 		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
 	}
 	render() {
-		// const currentUserId = JSON.parse(localStorage.currentUser).id
-		// href={`/users/${currentUserId}`}
 		return (
 		<>
 			<AddExpenseFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
-				<StyledH1>-Add Expense-</StyledH1>
-					<StyledP>Description:</StyledP>
-					<StyledInput type="text" onChange={this.handleInput} name="description" value={this.state.description}/>
-					<StyledP>Date due:</StyledP>
-					<StyledInput type="date" onChange={this.handleInput} name="date_due" value={this.state.password} />
-					<StyledP>Amount:</StyledP>
-					<StyledInput type="text" onChange={this.handleInput} name="amount" value={this.state.password} />
-					<StyledP>Account:</StyledP>
-					<StyledInput type="text" onChange={this.handleInput} name="bank_account" value={this.state.password} />
+					<StyledH1>-Add Expense-</StyledH1>
+					{/* <StyledP>Date due:</StyledP> */}
+						<br/>
+					<TextField style={{margin: "5px"}} name="date_due" type="date" value={this.state.date_due} onChange={this.handleInput}/>
+						<br/>
+					<TextField style={{margin: "5px"}} color="black" label="Description" name="description" defaultValue={this.state.description} onChange={this.handleInput}/>
+						<br/>
+					<TextField style={{margin: "5px"}} name="amount" label="Amount" type="number" onChange={this.handleInput}/>	
+						<br/>
+					<TextField style={{margin: "5px"}} label="Account" onChange={this.handleInput} name="bank_account" defaultValue={this.state.bank_account} />
+						<br/>
 					<StyledButton type="submit" >Submit</StyledButton>
-					<br/>
+						<br/>
 					<Link onClick={() => this.props.history.goBack()}>Cancel</Link>
 					</StyledForm>
 			</AddExpenseFormWrapper>
@@ -89,18 +90,14 @@ const StyledH1 = styled.h1`
   text-align: center;
   margin: 10px;
 `;
-const StyledP = styled.p`
-  font-size: 1.5em;
-  text-align: center;
-  font-size: medium;
-`;
 
-const StyledInput = styled.input`
-	margin: 5px;
-	display: block;
-  	margin-right: auto;
-  	margin-left: auto;
-`
+// const StyledP = styled.p`
+//   font-size: 1.5em;
+//   text-align: center;
+//   font-size: medium;
+// `;
+
+
 
 const StyledButton = styled.button`
 	margin: 8px;

@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { editExpense } from '../actions/userExpenses'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Switch from '@material-ui/core/Switch';
+
+
 
 
 class EditExpenseForm extends Component {
@@ -18,10 +22,11 @@ class EditExpenseForm extends Component {
 		user_id: 0
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const expId = parseInt(this.props.history.location.aboutProp.exp_id)
 		const currentUserExpenses = JSON.parse(localStorage.currentUser).expenses
 		const exp = currentUserExpenses.find(obj => obj.id === expId)
+		debugger
 		this.setState({
 			date_due: exp.date_due,
 			description: exp.description,
@@ -55,43 +60,52 @@ class EditExpenseForm extends Component {
 		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
 	}
 
-	handleRadio = (e) => {
-		this.setState({ [e.target.name]: e.target.value.toLowerCase() === 'true' ? true : false }, () => console.log(this.state) )
+	handleSwitch = (e) => {
+		let bool = e.target.value.toLowerCase() === 'true' ? true : false 
+			this.setState({ [e.target.name]: !bool }, () => console.log(this.state) )
 	}
+	
 
 	render() {
 		return (
 			<EditExpenseFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
 				<StyledH1>-Edit Expense-</StyledH1>
-					<StyledP>Description:</StyledP>
-					<StyledInput type="hidden" onChange={this.handleInput} name="id" value={this.state.id}/>
-					<StyledInput type="hidden" onChange={this.handleInput} name="user_id" value={this.state.user_id}/>
-					<StyledInput type="text" onChange={this.handleInput} name="description" value={this.state.description}/>
+					<TextField style={{margin: "5px"}} name="id" type="hidden" value={this.state.id} onChange={this.handleInput}/>
+					<TextField style={{margin: "5px"}} name="user_id" type="hidden" value={this.state.user_id} onChange={this.handleInput}/>
 					<StyledP>Date due:</StyledP>
-					<StyledInput type="date" onChange={this.handleInput} name="date_due" value={this.state.date_due} />
-					<StyledP>Amount:</StyledP>
-					<StyledInput type="text" onChange={this.handleInput} name="amount" value={this.state.amount} />
-					<StyledP>Account:</StyledP>
-					<StyledInput type="text" onChange={this.handleInput} name="bank_account" value={this.state.bank_account} />
-					<RadioDiv>
+						<br/>
+					<TextField style={{margin: "5px"}} name="date_due" type="date" value={this.state.date_due} onChange={this.handleInput}/>
+						<br/>
+					<TextField style={{margin: "5px"}} color="black" label="Description" name="description" value={this.state.description} onChange={this.handleInput}/>
+						<br/>
+					<TextField style={{margin: "5px"}} name="amount" label="Amount" value={this.state.amount}type="number" onChange={this.handleInput}/>	
+						<br/>
+					<TextField style={{margin: "5px"}} label="Account" value={this.state.bank_account} onChange={this.handleInput} name="bank_account" defaultValue={this.state.bank_account} />
+						<br/>
+					<SwitchDiv>
 						Paid?
-						<input style={{ margin: "5px" }} type="radio" onChange={this.handleRadio} name="is_paid" value="true" checked={this.state.is_paid ? true : false}/> Yes
-								
-						<input style={{ margin: "5px" }} type="radio" onChange={this.handleRadio} name="is_paid" value="false" checked={!this.state.is_paid ? true : false}/> No
-					</RadioDiv>
-					<RadioDiv>
-						Automatic?
-						<input style={{ margin: "5px" }} type="radio" onChange={this.handleRadio} name="is_automatic" value="true" checked={this.state.is_automatic ? true : false}/> Yes
+						no
+						<Switch checked={this.state.is_paid} name="is_paid" onChange={this.handleSwitch} value={this.state.is_paid ? true : false} />	
+						yes
 						
-						<input style={{ margin: "5px" }} type="radio" onChange={this.handleRadio} name="is_automatic" value="false" checked={!this.state.is_automatic ? true : false}/> No
-					</RadioDiv>
-					<RadioDiv>
+					</SwitchDiv>
+					<SwitchDiv>
+						Automatic?
+						no
+						
+						<Switch checked={this.state.is_automatic} name="is_automatic" onChange={this.handleSwitch} value={this.state.is_automatic ? true : false}/>
+						yes
+						
+					</SwitchDiv>
+					<SwitchDiv>
 						Is money in account?
-						<input style={{ margin: "5px" }} type="radio" onChange={this.handleRadio} name="is_money_in_account" value="true" checked={this.state.is_money_in_account ? true : false}/> Yes
-					
-						<input style={{ margin: "5px" }} type="radio" onChange={this.handleRadio} name="is_money_in_account" value="false" checked={!this.state.is_money_in_account ? true : false}/> No
-					</RadioDiv>
+						
+						no
+						<Switch checked={this.state.is_money_in_account} name="is_money_in_account" onChange={this.handleSwitch} value={this.state.is_money_in_account ? true : false} />
+						yes
+						
+					</SwitchDiv>
 					<StyledButton type="submit">Submit</StyledButton>
 					<br/>
 					<Link onClick={() => this.props.history.goBack()}>Cancel</Link>
@@ -111,7 +125,7 @@ const EditExpenseFormWrapper = styled.div`
 	boxing-size: border-box;
 	background-color: black;
 `
-const RadioDiv = styled.div`
+const SwitchDiv = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items:center;
@@ -141,12 +155,7 @@ const StyledP = styled.p`
   font-size: medium;
 `;
 
-const StyledInput = styled.input`
-	margin: 5px;
-	display: block;
-  	margin-right: auto;
-  	margin-left: auto;
-`
+
 
 const StyledButton = styled.button`
 	margin: 8px;
@@ -154,8 +163,6 @@ const StyledButton = styled.button`
 	width: 80px;
 `
 
-// const StyledError = styled.div`
 
-// `
 
 
