@@ -6,3 +6,13 @@
 	outline: none;
 	font-family: 'Space Grotesk', sans-serif;
 }
+
+a {
+	color: black;
+	cursor: pointer;
+	text-decoration: none; /* no underline */
+  }
+  
+button {
+	cursor: pointer;
+}
