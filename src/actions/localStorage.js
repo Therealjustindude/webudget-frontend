@@ -14,8 +14,8 @@ export const saveState = (state) => {
 	try {
 		const serializedState = JSON.stringify(state);
 	  	localStorage.setItem('currentUser', serializedState);
-	} catch {
-	  // ignore write errors
+	} catch (err) {
+		return undefined;
 	}
 };
 
@@ -23,7 +23,8 @@ export const saveToken = (token) => {
 		localStorage.setItem('authToken', token);
 };
 
-export const removeToken = (state) => {
-	
+export const removeAuth = () => {
+	localStorage.removeItem('currentUser')
+	localStorage.removeItem('authToken')
 };
   
