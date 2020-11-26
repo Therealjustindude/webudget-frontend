@@ -18,7 +18,6 @@ export const addExpense = (expenseData, browserHistory) => {
 					browserHistory.push(`/users/${expenseData.user_id}`)
 					alert("Something went wrong!")
 				} else {
-					debugger
 					dispatch({ type: "EXPENSE_ADDED", payload: res })
 					browserHistory.push(`/users/${expenseData.user_id}`)
 				}
@@ -45,7 +44,6 @@ export const editExpense = (expenseData, browserHistory) => {
 					browserHistory.push(`/users/${expenseData.user_id}`)
 					alert("Something went wrong!")
 				} else {
-					debugger
 					dispatch({ type: "EXPENSE_PATCHED", payload: res })
 					browserHistory.push(`/users/${expenseData.user_id}`)
 				}

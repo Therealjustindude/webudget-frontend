@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {removeAuth} from '../actions/localStorage'
 import Button from '@material-ui/core/Button';
 import ExpensesTable from '../components/ExpensesTable'
 import Paper from '@material-ui/core/Paper';
@@ -7,8 +8,7 @@ import styled from 'styled-components'
 
 class UserContainer extends Component {
 	handleLogOut = () => {
-		localStorage.removeItem('currentUser')
-		localStorage.removeItem('authToken')
+		removeAuth()
 	}
 	// add: expenses form to be used for create and update
 	render() {
