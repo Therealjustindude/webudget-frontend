@@ -15,7 +15,6 @@ import { deleteExpense } from '../actions/userExpenses'
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 
 
@@ -23,7 +22,8 @@ class ExpensesTable extends Component {
 	state = {
 		user: this.props.user ? this.props.user : {},
 		expenses: this.props.expenses ? this.props.expenses : [],
-		total: 0
+		total: 0,
+		sortConfig: null
 	}
 	// use component will unmount to update the db and save data to local storage
 	componentDidMount() {
@@ -73,21 +73,54 @@ class ExpensesTable extends Component {
 		})
 	}
 
+	setSortConfig = (targetKey, targetDirection) => {
+		debugger
+		this.setState({
+			...this.state,
+			sortConfig: {
+				key: targetKey,
+				direction: targetDirection
+			}
+		})
+	}
+	requestSort = e => {
+		let key = e.target.name
+		let direction = 'ascending';
+		if (this.state.sortConfig && this.state.sortConfig.key === key){
+			if (this.state.sortConfig.direction === 'ascending') {
+				direction = 'descending';
+			}
+		} else {
+			this.setSortConfig(key, direction);
+		}
+		this.setSortConfig(key, direction);
+	}
 
 	render() {
+		let sortedExpenses = this.state.expenses
+		if (this.state.sortConfig !== null) {
+			sortedExpenses.sort((a, b) => {
+			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
+					return this.state.sortConfig.direction === 'ascending' ? -1 : 1;
+			  }
+			  if (a[this.state.sortConfig.key] > b[this.state.sortConfig.key]) {
+				return this.state.sortConfig.direction === 'ascending' ? 1 : -1;
+			  }
+			  return 0;
+			});
+		  }
 		return (
 			<>
 				<Paper style={{ overflow:'hidden',margin: '5px' }}>
 					<Table >
 					<TableHead>
 							<TableRow >
-							<TableCell align="center">Paid</TableCell>
-							<TableCell align="center">Due Date</TableCell>
-							<TableCell align="center">Description</TableCell>
-							<TableCell align="center"><AttachMoneyIcon /></TableCell>
-							<TableCell align="center">Account</TableCell>
-							<TableCell align="center">Automatic</TableCell>
-							<TableCell align="center">Deposited</TableCell>
+							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="date_due">Due Date</button></TableCell>
+							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="description">Description</button></TableCell>
+							<TableCell align="center"><button style={{ border: "none", background: "none" }} onClick={this.requestSort} name="amount">Amount</button></TableCell>
+							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="is_automatic">Automatic</button></TableCell>
+							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="bank_account">Account</button></TableCell>
+							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="is_paid">Paid</button></TableCell>
 							<TableCell align="center">  </TableCell>
 							<TableCell align="center">
 								<StyledButton>
@@ -99,28 +132,22 @@ class ExpensesTable extends Component {
 							</TableRow>
 					</TableHead>
 					<TableBody>
-						{this.state.expenses.map((exp) => (
+						{sortedExpenses.map((exp) => (
 							<TableRow key={exp.id} user_id={exp.user_id}>
-									<TableCell align="right" padding="checkbox" >
-										<FormControlLabel
-										control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="is_paid" />}
-										checked={exp.is_paid ? true : false}
-										/>	
-									</TableCell>
 								<TableCell align="center">
 									{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}
 								</TableCell>
-									<TableCell align="center">{exp.description}</TableCell>
+								<TableCell align="center">{exp.description}</TableCell>
 								<TableCell align="center">
 									${new Intl.NumberFormat().format(exp.amount)}
 								</TableCell>
-									<TableCell align="center">{exp.bank_account}</TableCell>
-									<TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
-								<TableCell align="right" padding="checkbox">
+								<TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
+								<TableCell align="center">{exp.bank_account}</TableCell>
+								<TableCell align="right" padding="checkbox" >
 									<FormControlLabel
-										control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="is_money_in_account" />}
-										checked={exp.is_money_in_account ? true : false} 
-									/>
+									control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="is_paid" />}
+									checked={exp.is_paid ? true : false}
+									/>	
 								</TableCell>
 								<TableCell align="center">
 									<Link to={{
@@ -160,6 +187,8 @@ const StyledButton = styled.button`
 	width: auto;
 	font-size: xx-small;
 `
+
+
 
 const mSTP = (state) => {
 	return {
