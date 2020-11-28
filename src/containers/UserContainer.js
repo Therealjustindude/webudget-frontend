@@ -14,8 +14,9 @@ class UserContainer extends Component {
 	render() {
 		return (
 			<>
-				<Paper style={{overflow:'hidden', alignItems: 'center', padding:'5px', margin:'5px' }}>
+				<Paper style={{overflow:'hidden', alignItems: 'center', padding:'5px', margin:'5px', display: 'flex',justifyContent: 'space-between' }}>
 					<Styledh1>weBudget</Styledh1>
+					<StyledP>{new Date().toDateString()}</StyledP>
 					<Button onClick={this.handleLogOut} variant="outlined" style={buttonStyle} href="/">
   						Log Out
 					</Button>
@@ -36,6 +37,9 @@ const Styledh1 = styled.h1`
   font-weight: bold;
   float: left;
   margin: 5px;
+`;
+const StyledP = styled.span`
+  font-size: 0.9em;
 `;
 
 export default UserContainer
