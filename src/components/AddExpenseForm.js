@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { addExpense } from '../actions/userExpenses'
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
+import Switch from '@material-ui/core/Switch';
 
 
 
@@ -31,6 +32,10 @@ class AddExpenseForm extends React.Component {
 	handleInput = (e) => {
 		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
 	}
+	handleSwitch = (e) => {
+		let bool = e.target.value.toLowerCase() === 'true' ? true : false 
+			this.setState({ [e.target.name]: !bool }, () => console.log(this.state) )
+	}
 	render() {
 		return (
 		<>
@@ -46,6 +51,15 @@ class AddExpenseForm extends React.Component {
 					<TextField style={{margin: "5px"}} name="amount" label="Amount" type="number" onChange={this.handleInput}/>	
 						<br/>
 					<TextField style={{margin: "5px"}} label="Account" onChange={this.handleInput} name="bank_account" defaultValue={this.state.bank_account} />
+						<br />
+					<SwitchDiv>
+						Automatic?
+						no
+						
+						<Switch checked={this.state.is_automatic} name="is_automatic" onChange={this.handleSwitch} value={this.state.is_automatic ? true : false}/>
+						yes
+						
+					</SwitchDiv>
 						<br/>
 					<StyledButton type="submit" >Submit</StyledButton>
 						<br/>
@@ -90,6 +104,14 @@ const StyledH1 = styled.h1`
   text-align: center;
   margin: 10px;
 `;
+
+const SwitchDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	margin: 8px;
+	boxing-size: border-box;
+`
 
 // const StyledP = styled.p`
 //   font-size: 1.5em;
