@@ -17,7 +17,6 @@ class EditExpenseForm extends Component {
 		bank_account: '',
 		is_automatic: false,
 		is_paid: false,
-		is_money_in_account: false,
 		id: 0,
 		user_id: 0
 	}
@@ -26,7 +25,6 @@ class EditExpenseForm extends Component {
 		const expId = parseInt(this.props.history.location.aboutProp.exp_id)
 		const currentUserExpenses = JSON.parse(localStorage.currentUser).expenses
 		const exp = currentUserExpenses.find(obj => obj.id === expId)
-		debugger
 		this.setState({
 			date_due: exp.date_due,
 			description: exp.description,
@@ -34,7 +32,6 @@ class EditExpenseForm extends Component {
 			bank_account: exp.bank_account,
 			is_automatic: exp.is_automatic ? true : false,
 			is_paid: exp.is_paid ? true : false,
-			is_money_in_account: exp.is_money_in_account ? true : false,
 			id: exp.id,
 			user_id: exp.user_id
 		})
@@ -51,7 +48,6 @@ class EditExpenseForm extends Component {
 			bank_account: '',
 			is_automatic: false,
 			is_paid: false,
-			is_money_in_account: false,
 			id: 0,
 			user_id: 0
 		})
@@ -95,14 +91,6 @@ class EditExpenseForm extends Component {
 						no
 						
 						<Switch checked={this.state.is_automatic} name="is_automatic" onChange={this.handleSwitch} value={this.state.is_automatic ? true : false}/>
-						yes
-						
-					</SwitchDiv>
-					<SwitchDiv>
-						Is money in account?
-						
-						no
-						<Switch checked={this.state.is_money_in_account} name="is_money_in_account" onChange={this.handleSwitch} value={this.state.is_money_in_account ? true : false} />
 						yes
 						
 					</SwitchDiv>

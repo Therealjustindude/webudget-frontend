@@ -12,8 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components'
 import {Link} from 'react-router-dom';
 import { deleteExpense } from '../actions/userExpenses'
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
@@ -74,7 +73,6 @@ class ExpensesTable extends Component {
 	}
 
 	setSortConfig = (targetKey, targetDirection) => {
-		debugger
 		this.setState({
 			...this.state,
 			sortConfig: {
@@ -83,6 +81,7 @@ class ExpensesTable extends Component {
 			}
 		})
 	}
+
 	requestSort = e => {
 		let key = e.target.name
 		let direction = 'ascending';
@@ -111,7 +110,7 @@ class ExpensesTable extends Component {
 		  }
 		return (
 			<>
-				<Paper style={{ overflow:'hidden',margin: '5px' }}>
+				<Paper style={{ overflow:'hidden',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
 					<Table >
 					<TableHead>
 							<TableRow >
@@ -121,7 +120,7 @@ class ExpensesTable extends Component {
 							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="is_automatic">Automatic</button></TableCell>
 							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="bank_account">Account</button></TableCell>
 							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="is_paid">Paid</button></TableCell>
-							<TableCell align="center">  </TableCell>
+							<TableCell align="center">          </TableCell>
 							<TableCell align="center">
 								<StyledButton>
 									<Link to={`/users/${this.state.user.id}/expenses/add`}>
@@ -143,9 +142,9 @@ class ExpensesTable extends Component {
 								</TableCell>
 								<TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
 								<TableCell align="center">{exp.bank_account}</TableCell>
-								<TableCell align="right" padding="checkbox" >
+								<TableCell align="center" padding="checkbox" colorSecondary="yellow">
 									<FormControlLabel
-									control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="is_paid" />}
+										control={<Checkbox icon={<CheckIcon color='disabled'/>} checkedIcon={<CheckIcon htmlColor='lightseagreen' />} name="is_paid" />}
 									checked={exp.is_paid ? true : false}
 									/>	
 								</TableCell>
