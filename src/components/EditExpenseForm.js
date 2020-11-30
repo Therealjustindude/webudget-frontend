@@ -18,7 +18,8 @@ class EditExpenseForm extends Component {
 		is_automatic: false,
 		is_paid: false,
 		id: 0,
-		user_id: 0
+		user_id: 0,
+		debt_id: 0
 	}
 
 	componentDidMount() {
@@ -33,7 +34,8 @@ class EditExpenseForm extends Component {
 			is_automatic: exp.is_automatic ? true : false,
 			is_paid: exp.is_paid ? true : false,
 			id: exp.id,
-			user_id: exp.user_id
+			user_id: exp.user_id,
+			debt_id: exp.debt_id
 		})
 		
 	}
@@ -53,12 +55,12 @@ class EditExpenseForm extends Component {
 		})
 	}
 	handleInput = (e) => {
-		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
 	handleSwitch = (e) => {
 		let bool = e.target.value.toLowerCase() === 'true' ? true : false 
-			this.setState({ [e.target.name]: !bool }, () => console.log(this.state) )
+			this.setState({ [e.target.name]: !bool })
 	}
 	
 

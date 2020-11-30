@@ -5,15 +5,20 @@
 				...state,
 				loading: true
 			}
+		case "EXPENSES_FETCHED":
+			return {
+				...state,
+				expenses: action.payload
+			}
 		case "EXPENSE_ADDED":
 			return {
 				...state,
-				expense: action.payload
+				expenses: action.payload
 			}
 		case "EXPENSE_PATCHED":
 			return {
 				...state,
-				expense: action.payload
+				expenses: action.payload
 			}
 		default:
 			return state

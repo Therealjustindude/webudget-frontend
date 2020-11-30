@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import{loadState, saveState} from '../actions/localStorage'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,62 +13,69 @@ import {Link} from 'react-router-dom';
 import { deleteExpense } from '../actions/userExpenses'
 import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {  loadState, saveState } from '../actions/localStorage'
+
+
 
 
 
 class ExpensesTable extends Component {
 	state = {
-		user: this.props.user ? this.props.user : {},
-		expenses: this.props.expenses ? this.props.expenses : [],
-		total: 0,
+		user_id: 0,
+		expenses: this.props.userExpenses ? this.props.userExpenses : [],
 		sortConfig: null
 	}
-	// use component will unmount to update the db and save data to local storage
+
 	componentDidMount() {
-		if (localStorage.getItem("currentUser") === null) {
-			saveState(this.props.user)
-		} else {
+		if (localStorage.getItem("currentUser")){
 			const currentUser = JSON.parse(localStorage.currentUser)
-			if (this.props.expense && currentUser.expenses.find(exp => exp.id === this.props.expense.id)) { 
-				const removeIndex = currentUser.expenses.map(exp => exp.id).indexOf(this.props.expense.id)
-				currentUser.expenses.splice(removeIndex, 1)
-				currentUser.expenses.push(this.props.expense)
+			if (this.props.expenses) { 
+				delete currentUser.expenses
+				currentUser.expenses = this.props.expenses
 				localStorage.removeItem('currentUser')
+				this.setState({
+					...this.state,
+					expenses: this.props.expenses ? this.props.expenses : currentUser.expenses,
+					user_id: currentUser.id,
+				})
 				saveState(currentUser)
-			} else if (this.props.expense) {
-				currentUser.expenses.push(this.props.expense)
-				localStorage.removeItem('currentUser')
-				saveState(currentUser)
+			} else {
+				debugger
+				const persistedState = { user: loadState() }
+				this.setState({
+				expenses: persistedState.user.expenses,
+				user_id: persistedState.user.id
+				}) 
 			}
-		}
-		const persistedState = { user: loadState() }
-		this.setState({
-			user: persistedState.user,
-			expenses: persistedState.user.expenses ? persistedState.user.expenses : [],
-			total: this.getTotal(persistedState.user.expenses)
-		})	
-	}
+		} 
+		debugger
+	}	
 
 	getTotal = (expenses) => {
-		let total = 0
-		expenses.forEach(exp => {
-			total += exp.amount 
-		})
-		return total
+		if (expenses) {
+			let total = 0
+			expenses.forEach(exp => {
+				total += exp.amount 
+			})
+			return total
+		} else {
+			return 0
+		}
 	}
 
 	handleDelete = (exp) => {
 		this.props.deleteExpense(exp)
+		debugger
 		const currentUser = JSON.parse(localStorage.currentUser)
-		const removeIndex = currentUser.expenses.map(expense => expense.id).indexOf(exp.id)
-		currentUser.expenses.splice(removeIndex, 1)
-		localStorage.removeItem('currentUser')
-		saveState(currentUser)
-		const persistedState = { user: loadState() }
-		this.setState({
-			user: persistedState.user,
-			expenses: persistedState.user.expenses ? persistedState.user.expenses : []
-		})
+        const removeIndex = currentUser.expenses.map(expense => expense.id).indexOf(exp.id)
+        currentUser.expenses.splice(removeIndex, 1)
+        localStorage.removeItem('currentUser')
+        saveState(currentUser)
+        const persistedState = { user: loadState() }
+        this.setState({
+         user_id: persistedState.user.id,
+         expenses: persistedState.user.expenses ? persistedState.user.expenses : []
+        })
 	}
 
 	setSortConfig = (targetKey, targetDirection) => {
@@ -96,7 +102,7 @@ class ExpensesTable extends Component {
 	}
 
 	render() {
-		let sortedExpenses = this.state.expenses
+		let sortedExpenses = this.state.expenses ? this.state.expenses : []
 		if (this.state.sortConfig !== null) {
 			sortedExpenses.sort((a, b) => {
 			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
@@ -123,7 +129,7 @@ class ExpensesTable extends Component {
 							<TableCell align="center">          </TableCell>
 							<TableCell align="center">
 								<StyledButton>
-									<Link to={`/users/${this.state.user.id}/expenses/add`}>
+									<Link to={`/users/${this.state.user_id}/expenses/add`}>
 									Add Expense
 									</Link>
 								</StyledButton>
@@ -142,21 +148,23 @@ class ExpensesTable extends Component {
 								</TableCell>
 								<TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
 								<TableCell align="center">{exp.bank_account}</TableCell>
-								<TableCell align="center" padding="checkbox" colorSecondary="yellow">
+								<TableCell align="center" padding="checkbox">
 									<FormControlLabel
 										control={<Checkbox icon={<CheckIcon color='disabled'/>} checkedIcon={<CheckIcon htmlColor='lightseagreen' />} name="is_paid" />}
 									checked={exp.is_paid ? true : false}
 									/>	
 								</TableCell>
 								<TableCell align="center">
-									<Link to={{
+									<StyledButton>
+										<Link to={{
 										pathname: `/users/${exp.user_id}/expenses/${exp.id}/edit`,
 										aboutProp: {
 											exp_id: `${exp.id}`
-										}
-									}}>
-										<StyledButton>Edit</StyledButton>
-									</Link>
+											}
+										}}>
+										Edit
+										</Link>
+									</StyledButton>
 								</TableCell>
 								<TableCell align="center">
 										<StyledButton onClick={()=> this.handleDelete(exp)}>Delete</StyledButton>
@@ -167,11 +175,11 @@ class ExpensesTable extends Component {
 					<TableFooter>
 						<TableRow>
 							<TableCell/>
-							<TableCell/>
-							<TableCell /> 
+							<TableCell />
 							<TableCell variant="footer" align="center">
-									Total: ${new Intl.NumberFormat().format(this.state.total)}
+									Total: ${new Intl.NumberFormat().format(this.getTotal(this.state.expenses))}
 							</TableCell>
+							<TableCell /> 
 						</TableRow>
 					</TableFooter>
 					</Table>
@@ -187,14 +195,12 @@ const StyledButton = styled.button`
 	font-size: xx-small;
 `
 
-
-
 const mSTP = (state) => {
+	// debugger
 	return {
-		user: state.userReducer.userProfile.user ,
-		expenses: state.userReducer.userProfile.expenses,
-		expense: state.expensesReducer.expense
+		expenses: state.expensesReducer.expenses
 	}
 }
+
 
 export default connect(mSTP, {deleteExpense})(ExpensesTable)
