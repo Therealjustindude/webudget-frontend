@@ -5,8 +5,8 @@ import { addExpense } from '../actions/userExpenses'
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
-
-
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 class AddExpenseForm extends React.Component {
@@ -17,24 +17,39 @@ class AddExpenseForm extends React.Component {
 		bank_account: '',
 		is_automatic: false,
 		is_paid: false,
-		is_money_in_account: false
+		user_debts: [],
+		debt_sel: {}
+	}
+	componentDidMount() {
+		debugger
+		const userDebts = JSON.parse(localStorage.currentUser).debts
+		this.setState({
+			...this.state,
+			user_debts: userDebts
+		})
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
+		debugger
 		this.props.addExpense(this.state, this.props.history)
 		this.setState({
 			date_due: '',
 			description: '',
 			amount: '',
-			bank_account: ''
+			bank_account: '',
+			user_debts: [],
+			debt_sel: {}
 		})
 	}
 	handleInput = (e) => {
-		this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state) )
+		this.setState({ [e.target.name]: e.target.value })
 	}
 	handleSwitch = (e) => {
 		let bool = e.target.value.toLowerCase() === 'true' ? true : false 
-			this.setState({ [e.target.name]: !bool }, () => console.log(this.state) )
+		this.setState({ [e.target.name]: !bool })
+	}
+	handleChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value})
 	}
 	render() {
 		return (
@@ -42,7 +57,6 @@ class AddExpenseForm extends React.Component {
 			<AddExpenseFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
 					<StyledH1>-Add Expense-</StyledH1>
-					{/* <StyledP>Date due:</StyledP> */}
 						<br/>
 					<TextField style={{margin: "5px"}} name="date_due" type="date" value={this.state.date_due} onChange={this.handleInput}/>
 						<br/>
@@ -60,6 +74,21 @@ class AddExpenseForm extends React.Component {
 						yes
 						
 					</SwitchDiv>
+						<br />
+					<h4>Does this expense belong to debt?</h4>
+					<Select
+						style={{margin: "5px", width:"auto", borderRadius:"10px" }}	
+						value={this.state.debt_sel}
+						name="debt_sel"	
+						onChange={this.handleChange}
+					>
+						<MenuItem disabled value="">
+							<em>Select a debt</em>
+						</MenuItem>	
+						{this.state.user_debts.map((debt) => (
+							<MenuItem value={debt.id}>{debt.title}</MenuItem>
+						))}
+					</Select>
 						<br/>
 					<StyledButton type="submit" >Submit</StyledButton>
 						<br/>
