@@ -1,9 +1,9 @@
 # weBudget - Frontend 
-
+This app was created to help keep track of your monthly expenses.
 
 ## The Details:
 
-This app is built using a Rails API backend and React JS frontend.
+This app is built using a Rails API backend and React JS frontend. If you seeded the db you can sign in as test user. Instructions below in set up.
 
 
 ### Frontend: React/Redux
@@ -19,7 +19,11 @@ This front end is built with React and Redux. My front end makes fetch requests 
 ```
 * npm install
 ```
-
-#### View the front end
+##### View the front end
 
 * npm start
+```
+* email: test@gmail.com
+```
+* password: password
+```
