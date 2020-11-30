@@ -51,3 +51,27 @@ export const signupUser = (data, browserHistory) => {
 			})
 	})
 }
+
+export const getUser = () => {
+	return ((dispatch) => {
+		let user_id = JSON.parse(localStorage.currentUser).id
+		return fetch(`http://localhost:3001/api/v1/users/${user_id}`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"method": "USER_DEBT_POST",
+				"Authorization": `${localStorage.authToken}`
+			}
+		})
+			.then(res => res.json())
+			.then(res => {
+				if (res.error) {
+					alert("Something went wrong!")
+				} else {
+					debugger
+					dispatch({ type: "USER_FETCHED", payload: res })
+				}
+			})
+	})
+}

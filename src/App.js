@@ -3,18 +3,31 @@ import { Suspense, lazy } from 'react';
 import {connect} from 'react-redux'
 import {Switch, Route} from 'react-router-dom';
 import './index.css';
+// import { getUser } from './actions/user'
+
 
 const LoginForm = lazy(() => import('./components/LoginForm'));
 const SignupForm = lazy(() => import('./components/SignupForm'));
 const UserContainer = lazy(() => import('./containers/UserContainer'));
 const AddExpenseForm = lazy(() => import('./components/AddExpenseForm'));
 const EditExpenseForm = lazy(() => import('./components/EditExpenseForm'));
+const AddDebtForm = lazy(() => import('./components/AddDebtForm'));
+const EditDebtForm = lazy(() => import('./components/EditDebtForm'));
 
 class App extends Component {
-  
-  // add componenet did mount to check for user and authtoken
-  render() {
-
+  // state = {
+  //   // user: 
+  // }
+    componentDidMount() {
+      debugger
+    
+  //   // if (localStorage.getItem("currentUser")) {
+  //   //   debugger
+  //   //     localStorage.removeItem('currentUser')
+  //   //     this.props.getUser()
+  //   //   }
+    }
+    render() {
     return (
       <div className="App">
         <Suspense fallback={<h1>Loading...</h1>}>
@@ -24,6 +37,8 @@ class App extends Component {
             <Route exact path='/users/:id' render={(routerProps) => <UserContainer history={routerProps.history} />} />
             <Route exact path='/users/:id/expenses/add' render={(routerProps) => <AddExpenseForm history={routerProps.history} />} /> */}
             <Route exact path='/users/:user_id/expenses/:id/edit' render={(routerProps) => <EditExpenseForm history={routerProps.history} />} />
+            <Route exact path='/users/:id/debts/add' render={(routerProps) => <AddDebtForm history={routerProps.history} />} /> 
+            <Route exact path='/users/:user_id/debts/:id/edit' render={(routerProps) => <EditDebtForm history={routerProps.history} />} /> 
           </Switch>
         </Suspense>
       </div>
@@ -31,7 +46,11 @@ class App extends Component {
   }
 }
 
- 
+// const mSTP = (state) => {
+// 	debugger
+// 	return {
+// 		user: state.userReducer.userProfile.user
+// 	}
+// }
 
-// connect to store
 export default connect()(App);
