@@ -5,6 +5,8 @@ import { editExpense } from '../actions/userExpenses'
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 
@@ -19,13 +21,15 @@ class EditExpenseForm extends Component {
 		is_paid: false,
 		id: 0,
 		user_id: 0,
-		debt_id: 0
+		debt_id: 0,
+		user_debts: [],
+		debt_sel: {}
 	}
 
 	componentDidMount() {
 		const expId = parseInt(this.props.history.location.aboutProp.exp_id)
-		const currentUserExpenses = JSON.parse(localStorage.currentUser).expenses
-		const exp = currentUserExpenses.find(obj => obj.id === expId)
+		const currentUser = JSON.parse(localStorage.currentUser)
+		const exp = currentUser.expenses.find(obj => obj.id === expId)
 		this.setState({
 			date_due: exp.date_due,
 			description: exp.description,
@@ -35,7 +39,8 @@ class EditExpenseForm extends Component {
 			is_paid: exp.is_paid ? true : false,
 			id: exp.id,
 			user_id: exp.user_id,
-			debt_id: exp.debt_id
+			debt_id: exp.debt_id,
+			user_debts: exp.debt_id ? [] : currentUser.debts
 		})
 		
 	}
@@ -51,7 +56,9 @@ class EditExpenseForm extends Component {
 			is_automatic: false,
 			is_paid: false,
 			id: 0,
-			user_id: 0
+			user_id: 0,
+			user_debts: [],
+			debt_sel: {}
 		})
 	}
 	handleInput = (e) => {
@@ -62,7 +69,9 @@ class EditExpenseForm extends Component {
 		let bool = e.target.value.toLowerCase() === 'true' ? true : false 
 			this.setState({ [e.target.name]: !bool })
 	}
-	
+	handleChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value})
+	}
 
 	render() {
 		return (
@@ -96,6 +105,21 @@ class EditExpenseForm extends Component {
 						yes
 						
 					</SwitchDiv>
+					<h4>Does this expense belong to debt?</h4>
+					<Select
+						style={{margin: "5px", width:"auto", borderRadius:"10px" }}	
+						value={this.state.debt_sel}
+						name="debt_sel"	
+						onChange={this.handleChange}
+					>
+						<MenuItem disabled value="">
+							<em>{this.state.user_debts === [] ? 'Select a debt' : 'already linked'}</em>
+						</MenuItem>	
+						{this.state.user_debts.map((debt) => (
+							<MenuItem value={debt.id}>{debt.title}</MenuItem>
+						))}
+					</Select>
+					<br/>
 					<StyledButton type="submit">Submit</StyledButton>
 					<br/>
 					<Link onClick={() => this.props.history.goBack()}>Cancel</Link>
