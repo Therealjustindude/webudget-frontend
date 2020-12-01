@@ -15,15 +15,14 @@ import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {  loadState, saveState } from '../actions/localStorage'
 
-
-
-
-
 class ExpensesTable extends Component {
 	state = {
 		user_id: 0,
 		expenses: this.props.userExpenses ? this.props.userExpenses : [],
-		sortConfig: null
+		sortConfig: {
+			key: 'date_due',
+			direction: 'ascending'
+		}
 	}
 
 	componentDidMount() {
