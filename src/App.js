@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Suspense, lazy } from 'react';
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 import {Switch, Route} from 'react-router-dom';
 import './index.css';
-// import { getUser } from './actions/user'
 
 
 const LoginForm = lazy(() => import('./components/LoginForm'));
@@ -15,18 +14,6 @@ const AddDebtForm = lazy(() => import('./components/AddDebtForm'));
 const EditDebtForm = lazy(() => import('./components/EditDebtForm'));
 
 class App extends Component {
-  // state = {
-  //   // user: 
-  // }
-    componentDidMount() {
-      debugger
-    
-  //   // if (localStorage.getItem("currentUser")) {
-  //   //   debugger
-  //   //     localStorage.removeItem('currentUser')
-  //   //     this.props.getUser()
-  //   //   }
-    }
     render() {
     return (
       <div className="App">
@@ -46,11 +33,5 @@ class App extends Component {
   }
 }
 
-// const mSTP = (state) => {
-// 	debugger
-// 	return {
-// 		user: state.userReducer.userProfile.user
-// 	}
-// }
 
-export default connect()(App);
+export default App;
