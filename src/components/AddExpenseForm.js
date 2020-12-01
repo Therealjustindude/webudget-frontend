@@ -21,10 +21,11 @@ class AddExpenseForm extends React.Component {
 		debt_sel: {}
 	}
 	componentDidMount() {
-		const userDebts = JSON.parse(localStorage.currentUser).debts
+		const user = JSON.parse(localStorage.currentUser)
+
 		this.setState({
 			...this.state,
-			user_debts: userDebts
+			user_debts: user.debts ? user.debts : []
 		})
 	}
 	handleSubmit = (e) => {
