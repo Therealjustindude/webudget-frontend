@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { removeAuth } from '../actions/localStorage'
 import Button from '@material-ui/core/Button';
-import ExpensesTable from '../components/ExpensesTable'
-import DebtTable from '../components/DebtTable'
+// import ExpensesTable from '../components/ExpensesTable'
+// import DebtTable from '../components/DebtTable'
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import {  saveState } from '../actions/localStorage'
+import  UserTableContainer  from './UserTableContainer';
 
 
 
@@ -35,8 +36,9 @@ class UserContainer extends Component {
   						Log Out
 					</Button>
 				</Paper>
-				<ExpensesTable currentUser={this.state.user.id} userExpenses={this.state.user.expenses} history={this.props.history} />
-				<DebtTable currentUser={this.state.user.id} userDebts={this.state.user.debts} history={this.props.history}/>
+				{/* <ExpensesTable currentUser={this.state.user} userExpenses={this.state.user.expenses} history={this.props.history} />
+				<DebtTable currentUser={this.state.user.id} userDebts={this.state.user.debts} history={this.props.history} /> */}
+				<UserTableContainer currentUser={this.state.user} />
 			</>
 		)
 	}
