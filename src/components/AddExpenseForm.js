@@ -21,7 +21,6 @@ class AddExpenseForm extends React.Component {
 		debt_sel: {}
 	}
 	componentDidMount() {
-		debugger
 		const userDebts = JSON.parse(localStorage.currentUser).debts
 		this.setState({
 			...this.state,
@@ -30,7 +29,6 @@ class AddExpenseForm extends React.Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
-		debugger
 		this.props.addExpense(this.state, this.props.history)
 		this.setState({
 			date_due: '',

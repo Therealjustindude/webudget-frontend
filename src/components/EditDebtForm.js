@@ -33,7 +33,7 @@ class EditDebtForm extends React.Component {
 	}
 	handleSubmit = (e) => {
 		e.preventDefault()
-		debugger
+		
 		this.props.editDebt(this.state, this.props.history)
 		this.setState({
 			title: '',

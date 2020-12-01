@@ -24,10 +24,9 @@ class DebtTable extends Component {
 	}
 
 	componentDidMount() {
-		// work on updating currentUser in LocalStorage
-		if (localStorage.getItem("currentUser")){
+		if (localStorage.getItem("currentUser")) {
 			const currentUser = JSON.parse(localStorage.currentUser)
-			if (this.props.debts) { 
+			if (this.props.debts) {
 				delete currentUser.debts
 				currentUser.debts = this.props.debts
 				localStorage.removeItem('currentUser')
@@ -38,7 +37,6 @@ class DebtTable extends Component {
 				})
 				saveState(currentUser)
 			} else {
-				
 				const persistedState = { user: loadState() }
 				this.setState({
 				debts: persistedState.user.debts,
@@ -64,7 +62,6 @@ class DebtTable extends Component {
 
 	handleDelete = (dbt) => {
 		this.props.deleteDebt(dbt)
-		
 		const currentUser = JSON.parse(localStorage.currentUser)
         const removeIndex = currentUser.debts.map(debt => debt.id).indexOf(dbt.id)
         currentUser.debts.splice(removeIndex, 1)
@@ -197,7 +194,6 @@ const StyledButton = styled.button`
 `
 
 const mSTP = (state) => {
-	
 	return {
 		debts: state.debtsReducer.debts
 	}
