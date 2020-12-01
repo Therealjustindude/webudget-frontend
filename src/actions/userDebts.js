@@ -51,7 +51,6 @@ export const addDebt = (debtData, browserHistory) => {
 export const editDebt = (debtData, browserHistory) => {
 	return ((dispatch) => {
 		const debt = { debt: debtData }
-		debugger
 		return fetch(`http://localhost:3001/api/v1/users/${debtData.user_id}/debts/${debtData.id}`, {
 			method: "PATCH",
 			headers: {
@@ -64,7 +63,6 @@ export const editDebt = (debtData, browserHistory) => {
 		})
 			.then(res => res.json())
 			.then(res => {
-				debugger
 				if (res.error) {
 					browserHistory.push(`/users/${debtData.user_id}`)
 					alert("Something went wrong!")

@@ -24,7 +24,6 @@
 export const addExpense = (expenseData, browserHistory) => {
 	return ((dispatch) => {
 		dispatch({ type: "LOADING_EXPENSES" })
-		debugger
 		expenseData.user_id = JSON.parse(localStorage.currentUser).id
 		const exp = { expense: expenseData }
 
@@ -44,7 +43,6 @@ export const addExpense = (expenseData, browserHistory) => {
 					browserHistory.push(`/users/${expenseData.user_id}`)
 					alert("Something went wrong!")
 				} else {
-					debugger
 					dispatch({ type: "EXPENSE_ADDED", payload: res })
 					browserHistory.push(`/users/${expenseData.user_id}`)
 				}
@@ -56,7 +54,6 @@ export const editExpense = (expenseData, browserHistory) => {
 	return ((dispatch) => {
 		dispatch({ type: "LOADING_EXPENSES" })
 		const exp = { expense: expenseData }
-		debugger
 		return fetch(`http://localhost:3001/api/v1/users/${expenseData.user_id}/expenses/${expenseData.id}`, {
 			method: "PATCH",
 			headers: {
@@ -69,7 +66,6 @@ export const editExpense = (expenseData, browserHistory) => {
 		})
 			.then(res => res.json())
 			.then(res => {
-				debugger
 				if (res.error) {
 					browserHistory.push(`/users/${expenseData.user_id}`)
 					alert("Something went wrong!")
