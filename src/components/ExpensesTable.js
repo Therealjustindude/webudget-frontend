@@ -28,19 +28,20 @@ class ExpensesTable extends Component {
 
 	componentDidMount() {
 		if (localStorage.getItem("currentUser")){
-			const currentUser = JSON.parse(localStorage.currentUser)
-			if (this.props.expenses) { 
+			if (this.props.user_expenses) { 
+				const currentUser = JSON.parse(localStorage.currentUser)
 				delete currentUser.expenses
-				currentUser.expenses = this.props.expenses
+				delete currentUser.debts
 				localStorage.removeItem('currentUser')
+				currentUser.expenses = this.props.user_expenses.expenses
+				currentUser.debts = this.props.user_expenses.debts
 				this.setState({
 					...this.state,
-					expenses: this.props.expenses ? this.props.expenses : currentUser.expenses,
+					expenses: this.props.user_expenses.expenses ? this.props.user_expenses.expenses : currentUser.expenses,
 					user_id: currentUser.id,
 				})
 				saveState(currentUser)
 			} else {
-				debugger
 				const persistedState = { user: loadState() }
 				this.setState({
 				expenses: persistedState.user.expenses,
@@ -48,7 +49,6 @@ class ExpensesTable extends Component {
 				}) 
 			}
 		} 
-		debugger
 	}	
 
 	getTotal = (expenses) => {
@@ -65,7 +65,6 @@ class ExpensesTable extends Component {
 
 	handleDelete = (exp) => {
 		this.props.deleteExpense(exp)
-		debugger
 		const currentUser = JSON.parse(localStorage.currentUser)
         const removeIndex = currentUser.expenses.map(expense => expense.id).indexOf(exp.id)
         currentUser.expenses.splice(removeIndex, 1)
@@ -196,9 +195,8 @@ const StyledButton = styled.button`
 `
 
 const mSTP = (state) => {
-	// debugger
 	return {
-		expenses: state.expensesReducer.expenses
+		user_expenses: state.expensesReducer.expenses
 	}
 }
 
