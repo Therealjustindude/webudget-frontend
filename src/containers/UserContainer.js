@@ -36,8 +36,6 @@ class UserContainer extends Component {
   						Log Out
 					</Button>
 				</Paper>
-				{/* <ExpensesTable currentUser={this.state.user} userExpenses={this.state.user.expenses} history={this.props.history} />
-				<DebtTable currentUser={this.state.user.id} userDebts={this.state.user.debts} history={this.props.history} /> */}
 				<UserTableContainer currentUser={this.state.user} />
 			</>
 		)

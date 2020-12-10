@@ -1,26 +1,3 @@
-// export const getExpenses = (user_id) => {
-// 	return ((dispatch) => {
-// 		return fetch(`http://localhost:3001/api/v1/users/${user_id}/expenses`, {
-// 			method: "GET",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 				"Accept": "application/json",
-// 				"method": "USER_DEBT_POST",
-// 				"Authorization": `${localStorage.authToken}`
-// 			}
-// 		})
-// 			.then(res => res.json())
-// 			.then(res => {
-// 				if (res.error) {
-// 					alert("Something went wrong!")
-// 				} else {
-// 					debugger
-// 					dispatch({ type: "EXPENSES_FETCHED", payload: res })
-// 				}
-// 			})
-// 	})
-// }
-
 export const addExpense = (expenseData, browserHistory) => {
 	return ((dispatch) => {
 		dispatch({ type: "LOADING_EXPENSES" })

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ExpensesTable from '../components/ExpensesTable'
-import DebtTable from '../components/DebtTable'
+import ExpensesTable from '../components/expense/ExpensesTable'
+import DebtTable from '../components/debt/DebtTable'
 
 export default class UserTableContainer extends Component {
 	render() {

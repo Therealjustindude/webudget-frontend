@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {deleteDebt } from '../actions/userDebts'
+import {deleteDebt } from '../../actions/userDebts'
 import {connect} from 'react-redux'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
-import {  loadState, saveState } from '../actions/localStorage'
+import {  loadState, saveState } from '../../actions/localStorage'
 
 
 class DebtTable extends Component {

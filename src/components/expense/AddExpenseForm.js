@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { addExpense } from '../actions/userExpenses'
+import { addExpense } from '../../actions/userExpenses'
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';

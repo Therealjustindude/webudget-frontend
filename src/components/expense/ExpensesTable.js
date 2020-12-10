@@ -10,10 +10,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components'
 import {Link} from 'react-router-dom';
-import { deleteExpense } from '../actions/userExpenses'
+import { deleteExpense } from '../../actions/userExpenses'
 import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {  loadState, saveState } from '../actions/localStorage'
+import {  loadState, saveState } from '../../actions/localStorage'
 
 class ExpensesTable extends Component {
 	state = {
