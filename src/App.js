@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Suspense, lazy } from 'react';
-// import {connect} from 'react-redux'
 import {Switch, Route} from 'react-router-dom';
 import './index.css';
 
@@ -8,10 +7,10 @@ import './index.css';
 const LoginForm = lazy(() => import('./components/LoginForm'));
 const SignupForm = lazy(() => import('./components/SignupForm'));
 const UserContainer = lazy(() => import('./containers/UserContainer'));
-const AddExpenseForm = lazy(() => import('./components/AddExpenseForm'));
-const EditExpenseForm = lazy(() => import('./components/EditExpenseForm'));
-const AddDebtForm = lazy(() => import('./components/AddDebtForm'));
-const EditDebtForm = lazy(() => import('./components/EditDebtForm'));
+const AddExpenseForm = lazy(() => import('./components/expense/AddExpenseForm'));
+const EditExpenseForm = lazy(() => import('./components/expense/EditExpenseForm'));
+const AddDebtForm = lazy(() => import('./components/debt/AddDebtForm'));
+const EditDebtForm = lazy(() => import('./components/debt/EditDebtForm'));
 
 class App extends Component {
     render() {
