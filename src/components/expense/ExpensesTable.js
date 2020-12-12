@@ -26,7 +26,7 @@ class ExpensesTable extends Component {
 	}
 
 	componentDidMount() {
-		if (localStorage.getItem("currentUser")){
+		if (localStorage.getItem("currentUser")) {
 			if (this.props.user_expenses) { 
 				const currentUser = JSON.parse(localStorage.currentUser)
 				delete currentUser.expenses
@@ -99,10 +99,12 @@ class ExpensesTable extends Component {
 		this.setSortConfig(key, direction);
 	}
 
+	
+
 	render() {
-		let sortedExpenses = this.state.expenses ? this.state.expenses : []
+		let expensesArray = this.state.expenses ? this.state.expenses : []
 		if (this.state.sortConfig !== null) {
-			sortedExpenses.sort((a, b) => {
+			expensesArray.sort((a, b) => {
 			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
 					return this.state.sortConfig.direction === 'ascending' ? -1 : 1;
 			  }
@@ -111,10 +113,10 @@ class ExpensesTable extends Component {
 			  }
 			  return 0;
 			});
-		  }
+		}
 		return (
 			<>
-				<Paper style={{ overflow:'hidden',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
+				<Paper style={{ overflow:'scroll',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
 					<Table >
 					<TableHead>
 							<TableRow >
@@ -135,7 +137,7 @@ class ExpensesTable extends Component {
 							</TableRow>
 					</TableHead>
 					<TableBody>
-						{sortedExpenses.map((exp) => (
+						{expensesArray.map((exp) => (
 							<TableRow key={exp.id} user_id={exp.user_id}>
 								<TableCell align="center">
 									{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}

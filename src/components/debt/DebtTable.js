@@ -98,9 +98,9 @@ class DebtTable extends Component {
 	}
 
 	render() {
-		let sortedDebts = this.state.debts ? this.state.debts : []
+		let debtsArray = this.state.debts ? this.state.debts : []
 		if (this.state.sortConfig !== null) {
-			sortedDebts.sort((a, b) => {
+			debtsArray.sort((a, b) => {
 			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
 					return this.state.sortConfig.direction === 'ascending' ? -1 : 1;
 			  }
@@ -109,10 +109,10 @@ class DebtTable extends Component {
 			  }
 			  return 0;
 			});
-		  }
+		}
 		return (
 			<>
-			<Paper style={{ overflow:'hidden',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
+			<Paper style={{ overflow:'scroll',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
 				<Table >
 					<TableHead>
 						<TableRow >
@@ -136,7 +136,7 @@ class DebtTable extends Component {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{sortedDebts.map((debt) => (
+						{debtsArray.map((debt) => (
 							<TableRow key={debt.id} user_id={debt.user_id}>
 								<TableCell align="center">
 									<StyledButton onClick={() => this.handleDelete(debt)}>
