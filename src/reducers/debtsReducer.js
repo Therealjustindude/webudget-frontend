@@ -1,11 +1,5 @@
 const debtsReducer = (state = {}, action) => {
 	switch (action.type) {
-		case "DEBTS_FETCHED":
-			debugger
-			return {
-				...state,
-				debts: action.payload
-			}
 		case "DEBT_ADDED":
 			return {
 				...state,
