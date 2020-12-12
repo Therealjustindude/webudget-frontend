@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { editExpense } from '../actions/userExpenses'
+import { editExpense } from '../../actions/userExpenses'
 import { Link } from 'react-router-dom';
+import {
+	EditExpenseFormWrapper,
+	SwitchDiv,
+	StyledForm,
+	StyledH1,
+	StyledP,
+	StyledButton
+} from '../../styledComponents/editExpenseStyles'
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
@@ -78,8 +85,6 @@ class EditExpenseForm extends Component {
 			<EditExpenseFormWrapper>
 				<StyledForm onSubmit={this.handleSubmit}>
 				<StyledH1>-Edit Expense-</StyledH1>
-					<TextField style={{margin: "5px"}} name="id" type="hidden" value={this.state.id} onChange={this.handleInput}/>
-					<TextField style={{margin: "5px"}} name="user_id" type="hidden" value={this.state.user_id} onChange={this.handleInput}/>
 					<StyledP>Date due:</StyledP>
 						<br/>
 					<TextField style={{margin: "5px"}} name="date_due" type="date" value={this.state.date_due} onChange={this.handleInput}/>
@@ -112,7 +117,7 @@ class EditExpenseForm extends Component {
 						name="debt_sel"	
 						onChange={this.handleChange}
 					>
-						<MenuItem disabled value="">
+						<MenuItem value="">
 							<em>{this.state.user_debts === [] ? 'Select a debt' : 'already linked'}</em>
 						</MenuItem>	
 						{this.state.user_debts.map((debt) => (
@@ -128,55 +133,3 @@ class EditExpenseForm extends Component {
 	)}
 }
 export default connect(null, {editExpense})(EditExpenseForm)
-
-
-const EditExpenseFormWrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items:center;
-	height: 100vh;
-	padding: 0 20px;
-	boxing-size: border-box;
-	background-color: black;
-`
-const SwitchDiv = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items:center;
-	margin: 8px;
-	boxing-size: border-box;
-`
-
-const StyledForm = styled.form`
-	width: 100%;
-	max-width: 700px;
-	padding: 40px;
-	background-color: white;
-	border-radius: 10px;
-	boxing-size: border-box;
-	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
-	text-align: center;
-`
-
-const StyledH1 = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  margin: 10px;
-`;
-const StyledP = styled.p`
-  font-size: 1.5em;
-  text-align: center;
-  font-size: medium;
-`;
-
-
-
-const StyledButton = styled.button`
-	margin: 8px;
-	padding: 3px;
-	width: 80px;
-`
-
-
-
-

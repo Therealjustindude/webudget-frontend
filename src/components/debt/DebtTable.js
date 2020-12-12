@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {deleteDebt } from '../actions/userDebts'
+import {deleteDebt } from '../../actions/userDebts'
 import {connect} from 'react-redux'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
-import {  loadState, saveState } from '../actions/localStorage'
+import {  loadState, saveState } from '../../actions/localStorage'
 
 
 class DebtTable extends Component {
@@ -98,9 +98,9 @@ class DebtTable extends Component {
 	}
 
 	render() {
-		let sortedDebts = this.state.debts ? this.state.debts : []
+		let debtsArray = this.state.debts ? this.state.debts : []
 		if (this.state.sortConfig !== null) {
-			sortedDebts.sort((a, b) => {
+			debtsArray.sort((a, b) => {
 			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
 					return this.state.sortConfig.direction === 'ascending' ? -1 : 1;
 			  }
@@ -109,10 +109,10 @@ class DebtTable extends Component {
 			  }
 			  return 0;
 			});
-		  }
+		}
 		return (
 			<>
-			<Paper style={{ overflow:'hidden',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
+			<Paper style={{ overflow:'scroll',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
 				<Table >
 					<TableHead>
 						<TableRow >
@@ -136,7 +136,7 @@ class DebtTable extends Component {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{sortedDebts.map((debt) => (
+						{debtsArray.map((debt) => (
 							<TableRow key={debt.id} user_id={debt.user_id}>
 								<TableCell align="center">
 									<StyledButton onClick={() => this.handleDelete(debt)}>

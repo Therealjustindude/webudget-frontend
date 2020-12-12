@@ -1,26 +1,3 @@
-// export const getDebts = () => {
-// 	return ((dispatch) => {
-// 		let user_id = JSON.parse(localStorage.currentUser).id
-// 		return fetch(`http://localhost:3001/api/v1/users/${user_id}/debts`, {
-// 			method: "GET",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 				"Accept": "application/json",
-// 				"method": "USER_DEBT_GET,
-// 				"Authorization": `${localStorage.authToken}`
-// 			}
-// 		})
-// 			.then(res => res.json())
-// 			.then(res => {
-// 				if (res.error) {
-// 					alert("Something went wrong!")
-// 				} else {
-// 					dispatch({ type: "DEBTS_FETCHED", payload: res })
-// 				}
-// 			})
-// 	})
-// }
-
 export const addDebt = (debtData, browserHistory) => {
 	return ((dispatch) => {
 		debtData.user_id = JSON.parse(localStorage.currentUser).id

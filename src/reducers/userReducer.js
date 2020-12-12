@@ -5,17 +5,6 @@ const userReducer = (state = { userProfile: { user: {}},loading: false }, action
 				...state,
 				loading: true
 			}
-		case "USER_FETCHED":
-			return {
-				...state,
-				userProfile: {
-					user: action.payload,
-					...state.userProfile.user,
-					expenses: action.payload.expenses ? action.payload.expenses : [],
-					debts: action.payload.debts ? action.payload.debts : []
-				},
-				loading: false
-			}
 		case "USER_LOADED":
 			return {
 				...state,
