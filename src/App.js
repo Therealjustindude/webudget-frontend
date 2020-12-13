@@ -26,7 +26,7 @@ class App extends Component {
             <Route exact path='/users/:user_id/expenses/:id/edit' render={(routerProps) => <EditExpenseForm history={routerProps.history} />} />
             <Route exact path='/users/:id/debts/add' render={(routerProps) => <AddDebtForm history={routerProps.history} />} /> 
             <Route exact path='/users/:user_id/debts/:id/edit' render={(routerProps) => <EditDebtForm history={routerProps.history} />} /> 
-            <Route render={(routerProps) => <PageNotFound history={routerProps.history} />}/>
+            <Route path='*' component={PageNotFound}/>
           </Switch>
         </Suspense>
       </div>
