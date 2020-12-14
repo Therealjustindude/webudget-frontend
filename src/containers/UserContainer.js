@@ -11,7 +11,6 @@ import { Footer } from '../components/Footer';
 class UserContainer extends Component {
 	componentDidMount() {
 		if (localStorage.getItem("currentUser") === null) {
-			debugger
 			saveState(this.props.user)
 		}
 	}
