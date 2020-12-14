@@ -27,24 +27,24 @@ class ExpensesTable extends Component {
 
 	componentDidMount() {
 		if (localStorage.getItem("currentUser")) {
-			if (this.props.user_expenses) { 
-				const currentUser = JSON.parse(localStorage.currentUser)
-				delete currentUser.expenses
-				delete currentUser.debts
+			if (this.props.currentUser) { 
+				const currentLsUser = JSON.parse(localStorage.currentUser)
+				delete currentLsUser.expenses
+				delete currentLsUser.debts
 				localStorage.removeItem('currentUser')
-				currentUser.expenses = this.props.user_expenses.expenses
-				currentUser.debts = this.props.user_expenses.debts
+				currentLsUser.expenses = this.props.currentUser.expenses
+				currentLsUser.debts = this.props.currentUser.debts
 				this.setState({
 					...this.state,
-					expenses: this.props.user_expenses.expenses ? this.props.user_expenses.expenses : currentUser.expenses,
-					user_id: currentUser.id,
+					expenses: this.props.currentUser.expenses ? this.props.currentUser.expenses : currentLsUser.expenses,
+					user_id: currentLsUser.id,
 				})
-				saveState(currentUser)
+				saveState(currentLsUser)
 			} else {
-				const persistedState = { user: loadState() }
+				const prevState = { user: loadState() }
 				this.setState({
-				expenses: persistedState.user.expenses,
-				user_id: persistedState.user.id
+				expenses: prevState.user.expenses,
+				user_id: prevState.user.id
 				}) 
 			}
 		} 
@@ -197,7 +197,7 @@ const StyledButton = styled.button`
 
 const mSTP = (state) => {
 	return {
-		user_expenses: state.expensesReducer.expenses
+		currentUser: state.expensesReducer.currentUser
 	}
 }
 
