@@ -8,12 +8,14 @@
 		case "EXPENSE_ADDED":
 			return {
 				...state,
-				expenses: action.payload
+				currentUser: action.payload,
+				loading: false
 			}
 		case "EXPENSE_PATCHED":
 			return {
 				...state,
-				expenses: action.payload
+				currentUser: action.payload,
+				loading: false
 			}
 		default:
 			return state
