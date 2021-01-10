@@ -3,6 +3,7 @@ This app was created to help keep track of your monthly expenses.
 
 ## The Details:
 
+To get the back end up and running visit: https://github.com/Therealjustindude/webudget-backend
 This app is built using a Rails API backend and React JS frontend. If you seeded the db you can sign in as test user. Instructions below in set up.
 
 
