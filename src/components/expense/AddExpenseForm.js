@@ -24,7 +24,7 @@ class AddExpenseForm extends React.Component {
 		is_automatic: false,
 		is_paid: false,
 		user_debts: [],
-		debt_sel: {}
+		debt_id: ''
 	}
 	componentDidMount() {
 		const user = JSON.parse(localStorage.currentUser)
@@ -42,7 +42,7 @@ class AddExpenseForm extends React.Component {
 			amount: '',
 			bank_account: '',
 			user_debts: [],
-			debt_sel: {}
+			debt_id: ''
 		})
 	}
 	handleInput = (e) => {
@@ -82,8 +82,8 @@ class AddExpenseForm extends React.Component {
 						<h4>Does this expense belong to debt?</h4>
 					<Select
 						style={{margin: "5px", width:"auto", borderRadius:"10px" }}	
-						value={this.state.debt_sel}
-						name="debt_sel"	
+						value={this.state.debt_id}
+						name="debt_id"	
 						onChange={this.handleChange}
 					>
 						<MenuItem value="">

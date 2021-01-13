@@ -169,6 +169,7 @@ class ExpensesTable extends Component {
 								<TableCell align="center">
 										<StyledButton onClick={()=> this.handleDelete(exp)}>Delete</StyledButton>
 								</TableCell>
+							
 							</TableRow>
 						))}
 					</TableBody>

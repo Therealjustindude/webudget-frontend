@@ -22,7 +22,7 @@ class App extends Component {
             <Route exact path="/" render={(routerProps) => <LoginForm history={routerProps.history}/>} />
             <Route exact path='/signup' render={(routerProps) => <SignupForm history={routerProps.history} />} />
             <Route exact path='/users/:id' render={(routerProps) => <UserContainer history={routerProps.history} />} />
-            <Route exact path='/users/:id/expenses/add' render={(routerProps) => <AddExpenseForm history={routerProps.history} />} /> */}
+            <Route exact path='/users/:id/expenses/add' render={(routerProps) => <AddExpenseForm history={routerProps.history} />} /> 
             <Route exact path='/users/:user_id/expenses/:id/edit' render={(routerProps) => <EditExpenseForm history={routerProps.history} />} />
             <Route exact path='/users/:id/debts/add' render={(routerProps) => <AddDebtForm history={routerProps.history} />} /> 
             <Route exact path='/users/:user_id/debts/:id/edit' render={(routerProps) => <EditDebtForm history={routerProps.history} />} /> 
