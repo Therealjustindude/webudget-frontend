@@ -28,9 +28,8 @@ class EditExpenseForm extends Component {
 		is_paid: false,
 		id: 0,
 		user_id: 0,
-		debt_id: 0,
+		debt_id: '',
 		user_debts: [],
-		debt_sel: {}
 	}
 
 	componentDidMount() {
@@ -64,8 +63,8 @@ class EditExpenseForm extends Component {
 			is_paid: false,
 			id: 0,
 			user_id: 0,
+			debt_id: '',
 			user_debts: [],
-			debt_sel: {}
 		})
 	}
 	handleInput = (e) => {
@@ -113,8 +112,8 @@ class EditExpenseForm extends Component {
 					<h4>Does this expense belong to debt?</h4>
 					<Select
 						style={{margin: "5px", width:"auto", borderRadius:"10px" }}	
-						value={this.state.debt_sel}
-						name="debt_sel"	
+						value={this.state.debt_id}
+						name="debt_id"	
 						onChange={this.handleChange}
 					>
 						<MenuItem value="">
