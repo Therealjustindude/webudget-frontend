@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {  saveState } from '../actions/localStorage'
 import { UserTableContainer }  from './UserTableContainer';
 import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
 
 
 
@@ -19,7 +18,6 @@ class UserContainer extends Component {
 			<>
 				<Header />
 				<UserTableContainer currentUser={this.props.user} />
-				<Footer/>
 			</>
 		)
 	}
