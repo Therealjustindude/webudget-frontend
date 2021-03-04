@@ -1,18 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableFooter from '@material-ui/core/TableFooter';
-import Checkbox from '@material-ui/core/Checkbox';
-import Paper from '@material-ui/core/Paper';
-import styled from 'styled-components'
-import {Link} from 'react-router-dom';
+// import styled from 'styled-components'
+// import {Link} from 'react-router-dom';
 import { deleteExpense } from '../../actions/userExpenses'
-import CheckIcon from '@material-ui/icons/Check';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import CheckIcon from '@material-ui/icons/Check';
 import {  loadState, saveState } from '../../actions/localStorage'
 
 class ExpensesTable extends Component {
@@ -103,6 +94,7 @@ class ExpensesTable extends Component {
 
 	render() {
 		let expensesArray = this.state.expenses ? this.state.expenses : []
+		console.log(expensesArray)
 		if (this.state.sortConfig !== null) {
 			expensesArray.sort((a, b) => {
 			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
@@ -115,86 +107,24 @@ class ExpensesTable extends Component {
 			});
 		}
 		return (
-			<>
-				<Paper style={{ overflow:'scroll',margin: '5px', display: 'flex',justifyContent: 'space-between' }}>
-					<Table >
-					<TableHead>
-							<TableRow >
-							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="date_due">Due Date</button></TableCell>
-							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="description">Description</button></TableCell>
-							<TableCell align="center"><button style={{ border: "none", background: "none" }} onClick={this.requestSort} name="amount">Amount</button></TableCell>
-							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="is_automatic">Automatic</button></TableCell>
-							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="bank_account">Account</button></TableCell>
-							<TableCell align="center"><button style={{border: "none", background: "none"}} onClick={this.requestSort} name="is_paid">Paid</button></TableCell>
-							<TableCell align="center">          </TableCell>
-							<TableCell align="center">
-								<StyledButton>
-									<Link to={`/users/${this.state.user_id}/expenses/add`}>
-									Add Expense
-									</Link>
-								</StyledButton>
-							</TableCell>
-							</TableRow>
-					</TableHead>
-					<TableBody>
-						{expensesArray.map((exp) => (
-							<TableRow key={exp.id} user_id={exp.user_id}>
-								<TableCell align="center">
-									{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}
-								</TableCell>
-								<TableCell align="center">{exp.description}</TableCell>
-								<TableCell align="center">
-									${new Intl.NumberFormat().format(exp.amount)}
-								</TableCell>
-								<TableCell align="center">{exp.is_automatic ? "Yes" : "No"}</TableCell>
-								<TableCell align="center">{exp.bank_account}</TableCell>
-								<TableCell align="center" padding="checkbox">
-									<FormControlLabel
-										control={<Checkbox icon={<CheckIcon color='disabled'/>} checkedIcon={<CheckIcon htmlColor='lightseagreen' />} name="is_paid" />}
-									checked={exp.is_paid ? true : false}
-									/>	
-								</TableCell>
-								<TableCell align="center">
-									<StyledButton>
-										<Link to={{
-										pathname: `/users/${exp.user_id}/expenses/${exp.id}/edit`,
-										aboutProp: {
-											exp_id: `${exp.id}`
-											}
-										}}>
-										Edit
-										</Link>
-									</StyledButton>
-								</TableCell>
-								<TableCell align="center">
-										<StyledButton onClick={()=> this.handleDelete(exp)}>Delete</StyledButton>
-								</TableCell>
-							
-							</TableRow>
-						))}
-					</TableBody>
-					<TableFooter>
-						<TableRow>
-							<TableCell/>
-							<TableCell />
-							<TableCell variant="footer" align="center">
-									Total: ${new Intl.NumberFormat().format(this.getTotal(this.state.expenses))}
-							</TableCell>
-							<TableCell /> 
-						</TableRow>
-					</TableFooter>
-					</Table>
-				</Paper>
-			</>
+			<div>
+				{expensesArray.map((exp) => (
+					<div>
+						{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}
+						{exp.description}
+						{exp.amount}
+					</div>
+				))}
+			</div>
 		  );
 	}
 }
 
-const StyledButton = styled.button`
-	padding: 2px;
-	width: auto;
-	font-size: xx-small;
-`
+// const StyledButton = styled.button`
+// 	padding: 2px;
+// 	width: auto;
+// 	font-size: xx-small;
+// `
 
 const mSTP = (state) => {
 	return {
