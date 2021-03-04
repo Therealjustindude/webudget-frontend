@@ -11,7 +11,6 @@ const AddExpenseForm = lazy(() => import('./components/expense/AddExpenseForm'))
 const EditExpenseForm = lazy(() => import('./components/expense/EditExpenseForm'));
 const AddDebtForm = lazy(() => import('./components/debt/AddDebtForm'));
 const EditDebtForm = lazy(() => import('./components/debt/EditDebtForm'));
-const PageNotFound = lazy(() => import('./components/PageNotfound'));
 
 class App extends Component {
     render() {
@@ -26,7 +25,6 @@ class App extends Component {
             <Route exact path='/users/:user_id/expenses/:id/edit' render={(routerProps) => <EditExpenseForm history={routerProps.history} />} />
             <Route exact path='/users/:id/debts/add' render={(routerProps) => <AddDebtForm history={routerProps.history} />} /> 
             <Route exact path='/users/:user_id/debts/:id/edit' render={(routerProps) => <EditDebtForm history={routerProps.history} />} /> 
-            <Route path='*' component={PageNotFound}/>
           </Switch>
         </Suspense>
       </div>
