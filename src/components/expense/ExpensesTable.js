@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Paper from '@material-ui/core/Paper';
 // import {Link} from 'react-router-dom';
 import { deleteExpense } from '../../actions/userExpenses'
 // import CheckIcon from '@material-ui/icons/Check';
 import {  loadState, saveState } from '../../actions/localStorage'
+import { Expense } from './Expense'
 
 class ExpensesTable extends Component {
 	state = {
@@ -95,7 +95,7 @@ class ExpensesTable extends Component {
 
 	render() {
 		let expensesArray = this.state.expenses ? this.state.expenses : []
-		console.log(expensesArray)
+	
 		if (this.state.sortConfig !== null) {
 			expensesArray.sort((a, b) => {
 			  if (a[this.state.sortConfig.key] < b[this.state.sortConfig.key]) {
@@ -110,27 +110,13 @@ class ExpensesTable extends Component {
 		return (
 			<StyledDivContainer>
 				<StyledH1>Expenses</StyledH1>
-				{expensesArray.map((exp) => (
-					<Paper style={paperStyle}>
-						<StyledDivAttr>{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}</StyledDivAttr>
-						<StyledDivAttr>{exp.description}</StyledDivAttr>
-						<StyledDivAttr>${exp.amount}</StyledDivAttr>
-					</Paper>
-				))}
+				<Expense props={[...expensesArray]}/>
 			</StyledDivContainer>
 		  );
 	}
 }
 
-const paperStyle = {
-	overflow: 'hidden',
-	alignItems: 'center',
-	padding: '5px',
-	margin: '5px',
-	display: 'flex',
-	justifyContent: 'space-between',
-	width: '300px'
-}
+
 
 const StyledDivContainer = styled.div`
 	display: flex;
@@ -138,22 +124,9 @@ const StyledDivContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	margin: 2px;
-	padding: 2px;
-`
-const StyledDiv = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	border-style: solid;
-	border-color: black;
-	margin: 2px;
-	padding: 2px;
-	width: 500px;
 `
 
-const StyledDivAttr = styled.div`
-	margin: 10px
-`
+
 const StyledH1 = styled.h1`
  	text-align: center;
 `
