@@ -127,11 +127,9 @@ class ExpensesTable extends Component {
 
 
 const StyledDivContainer = styled.div`
-	display: flex;
-	flex-direction: column;
+	display: grid;
 	justify-content: center;
-	align-items: center;
-	margin: 2px;
+	
 `
 const StyledDiv = styled.div`
 	display: flex;
