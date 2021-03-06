@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-// import {Link} from 'react-router-dom';
 import { deleteExpense } from '../../actions/userExpenses'
+import {Link} from 'react-router-dom';
+
 // import CheckIcon from '@material-ui/icons/Check';
 import {  loadState, saveState } from '../../actions/localStorage'
 import { Expense } from './Expense'
@@ -109,7 +110,14 @@ class ExpensesTable extends Component {
 		}
 		return (
 			<StyledDivContainer>
-				<StyledH1>Expenses</StyledH1>
+				<StyledDiv>
+					<StyledH1>Expenses</StyledH1>
+					<StyledButton>
+						<Link to={`/users/${this.state.user_id}/expenses/add`}>
+						Add
+						</Link>
+					</StyledButton>
+				</StyledDiv>
 				<Expense props={[...expensesArray]}/>
 			</StyledDivContainer>
 		  );
@@ -125,16 +133,25 @@ const StyledDivContainer = styled.div`
 	align-items: center;
 	margin: 2px;
 `
+const StyledDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin: 2px;
+`
 
 
 const StyledH1 = styled.h1`
  	text-align: center;
 `
-// const StyledButton = styled.button`
-// 	padding: 2px;
-// 	width: auto;
-// 	font-size: xx-small;
-// `
+const StyledButton = styled.button`
+	padding: 2px;
+	margin: 4px;
+	width: auto;
+	font-size: xx-small;
+	background-color: white;
+`
 
 const mSTP = (state) => {
 	return {

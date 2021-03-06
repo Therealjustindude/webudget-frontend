@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import Paper from '@material-ui/core/Paper';
+import {Link} from 'react-router-dom';
 
 export const Expense = (expenses) => {
 	console.log(expenses)
@@ -18,7 +19,16 @@ export const Expense = (expenses) => {
 				<StyledLiAttr>Paid: {exp.is_paid ? 'True' : 'False'}</StyledLiAttr>
 				<StyledLiAttr>{exp.bank_account === "" ? "Account: N/A": `Account: ${exp.bank_account.toUpperCase()}`}</StyledLiAttr>
 				<StyledLiAttr>Automatic: {exp.is_automatic ? 'True' : 'False'}</StyledLiAttr>
-					
+				<StyledButton>
+					<Link to={{
+					pathname: `/users/${exp.user_id}/expenses/${exp.id}/edit`,
+					aboutProp: {
+						exp_id: `${exp.id}`
+						}
+					}}>
+					Edit
+					</Link>
+				</StyledButton>
 			</DropDownDiv>
 			</Paper>
 			
@@ -61,4 +71,10 @@ const DropDownDiv = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
+`
+
+const StyledButton = styled.button`
+	padding: 2px;
+	width: auto;
+	font-size: xx-small;
 `
