@@ -1,11 +1,11 @@
 import ExpensesTable from '../components/expense/ExpensesTable'
-// import DebtTable from '../components/debt/DebtTable'
+import DebtsTable from '../components/debt/DebtsTable'
 
 export const UserTableContainer = (currentUser) => {
 		return (
 			<>
 				<ExpensesTable currentUser={currentUser.currentUser.id} userExpenses={currentUser.currentUser.expenses}  />
-				{/* <DebtTable currentUser={currentUser.currentUser.id} userDebts={currentUser.currentUser.debts} /> */}
+				<DebtsTable currentUser={currentUser.currentUser.id} userDebts={currentUser.currentUser.debts} />
 			</>
 		)
 }

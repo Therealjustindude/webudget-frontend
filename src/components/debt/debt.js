@@ -3,26 +3,23 @@ import styled from 'styled-components'
 import Paper from '@material-ui/core/Paper';
 import {Link} from 'react-router-dom';
 
-export const Expense = (expenses) => {
+export const Debt = (debts) => {
 	const [open, setOpen] = useState(false);
 	
 	return (	
-		expenses.props.map(exp => (
-			<Paper style={paperStyle(exp)} onClick={() => setOpen(!open)}>
+		debts.props.map(debt => (
+			<Paper style={paperStyle(debt)} onClick={() => setOpen(!open)}>
 		 	<StyledDiv>
-				<StyledDivAttr>{new Intl.DateTimeFormat('en-US').format(new Date(exp.date_due))}</StyledDivAttr>
-				<StyledDivAttr>{exp.description}</StyledDivAttr>
-				<StyledDivAttr>${exp.amount}</StyledDivAttr>
+				<StyledDivAttr>{debt.title}</StyledDivAttr>
+				<StyledDivAttr>${debt.total}</StyledDivAttr>
 			</StyledDiv>
 			<DropDownDiv isOpen={open}>
-				<StyledLiAttr>Paid: {exp.is_paid ? 'True' : 'False'}</StyledLiAttr>
-				<StyledLiAttr>{exp.bank_account === "" ? "Account: N/A": `Account: ${exp.bank_account.toUpperCase()}`}</StyledLiAttr>
-				<StyledLiAttr>Automatic: {exp.is_automatic ? 'True' : 'False'}</StyledLiAttr>
+				<StyledLiAttr>Paid: {debt.is_paid ? 'True' : 'False'}</StyledLiAttr>
 				<StyledButton>
 					<Link to={{
-					pathname: `/users/${exp.user_id}/expenses/${exp.id}/edit`,
+					pathname: `/users/${debt.user_id}/debtenses/${debt.id}/edit`,
 					aboutProp: {
-						exp_id: `${exp.id}`
+						debt_id: `${debt.id}`
 						}
 					}}>
 					Edit
@@ -37,7 +34,7 @@ export const Expense = (expenses) => {
 	
 }
 
-const paperStyle = (exp) => {
+const paperStyle = (debt) => {
 	return {
 		overflow: 'hidden',
 		alignItems: 'center',
@@ -46,14 +43,14 @@ const paperStyle = (exp) => {
 		justifyContent: 'space-between',
 		width: '300px',
 		cursor: 'pointer',
-		borderBottom: `${exp.is_paid ? 'solid green' : 'solid red'}`,
-		borderTop: `${exp.is_paid ? 'solid green' : 'solid red'}`,
+		borderBottom: `${debt.is_paid ? 'solid green' : 'solid red'}`,
+		borderTop: `${debt.is_paid ? 'solid green' : 'solid red'}`,
 	}
 }
 
 const StyledDiv = styled.div`
 	display: grid;
-	grid-template-columns: auto auto auto;
+	grid-template-columns: auto auto;
 	justify-content: space-between;
 `
 const StyledDivAttr = styled.div`
